@@ -4,7 +4,6 @@
 - **Framework**: Next.js
 - **Language**: TypeScript
 - **Styling**: CSS
-- **Components**: Material-UI (MUI)
 - **Hosting**: Vercel
 
 ## Getting Started
