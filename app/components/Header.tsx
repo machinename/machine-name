@@ -11,8 +11,8 @@ export default function Header() {
     return (
         <header className={styles.header}>
             <nav className={styles.headerLeading}>
-                <Link className={styles.navLink} href={'/'}><h2>Machine Name</h2></Link>
-                <Link className={styles.navLink} href={'/projects'}><h2>Projects</h2></Link>
+                <Link className={styles.navLink} href={'/'}>Machine Name</Link>
+                <Link className={styles.navLink} href={'/projects'}>Projects</Link>
             </nav>
             <div
                 className={styles.headerTrailing}>
