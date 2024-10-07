@@ -10,10 +10,10 @@ export default function Projects() {
 
     return (
         <div className={styles.page}>
-            <div className={styles.projects}>
+            <div className={styles.container}>
                 <h1>Machine Name Projects</h1>
-                <Link href={'https://www.nestanote.com/'} target="_blank" rel="noopener noreferrer" className={isDarkMode ? styles.linkDark : styles.link}><h2>Nesta Note</h2></Link>
-                <Link href={'https://github.com/machinename/mini_ml'} target="_blank" rel="noopener noreferrer" className={isDarkMode ? styles.linkDark : styles.link}><h2>Mini ML</h2></Link>
+                <Link href={'https://github.com/machinename/'} target="_blank" rel="noopener noreferrer" className={isDarkMode ? styles.linkDark : styles.link}>Machine Name GitHub</Link>
+                <Link href={'https://www.papertake.io/'} target="_blank" rel="noopener noreferrer" className={isDarkMode ? styles.linkDark : styles.link}>Paper Take</Link>
             </div>
         </div>
     );

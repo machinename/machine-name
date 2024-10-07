@@ -16,6 +16,7 @@ body {
   background-color: white;
 }
 
+
 /* Typography */
 h1,
 h2,
@@ -47,6 +48,22 @@ p {
 
 .noScroll {
   overflow: hidden;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: #ffffff;
 }
 
 /* Dark Mode Styles */
