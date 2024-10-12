@@ -30,7 +30,7 @@ p {
 }
 
 #icon {
-  color: #000;
+  color: gray;
 }
 
 /* Scrollbar Styles */
@@ -64,9 +64,9 @@ p {
     color: #ffffff;
   }
 
-  #icon {
+  /* #icon {
     color: #ffffff;
-  }
+  } */
 
   ::-webkit-scrollbar-thumb {
     background: #555;

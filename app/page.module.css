@@ -6,6 +6,11 @@
   height: 100vh;
 }
 
+.page h1 {
+  font-size: 3rem;
+  color: gray;
+}
+
 .container {
   gap: 1rem;
   display: flex;
@@ -45,11 +50,11 @@
 
 .navLink {
   font-size: x-large;
-  color: inherit;
+  color: gray;
   text-decoration: none;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.1s ease-in-out;
 }
 
-.navLink:hover {
+.navLink:active {
   transform: scale(1.1);
 }
