@@ -14,13 +14,17 @@ export default function Header() {
             <nav
                 className={styles.headerTrailing}>
                 <Link href={'https://github.com/machinename'} target="_blank" rel="noopener noreferrer">
-                    <IconButton>
-                        <GitHub/>
+                    <IconButton id='icon'>
+                        <GitHub
+                
+                        />
                     </IconButton>
                 </Link>
                 <Link href="mailto:support@machinename.dev?subject=Support%20Request&body=Please%20describe%20your%20issue%20in%20detail.">
-                    <IconButton>
-                        <MailOutlined/>
+                    <IconButton id='icon'>
+                        <MailOutlined
+                         
+                        />
                     </IconButton>
                 </Link>
             </nav>

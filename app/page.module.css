@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: inherit;
 }
 
 .container {
@@ -46,7 +45,7 @@
 
 .navLink {
   font-size: x-large;
-  color: gray;
+  color: inherit;
   text-decoration: none;
   transition: transform 0.2s ease-in-out;
 }
