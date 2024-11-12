@@ -1,4 +1,4 @@
-# machinename.dev
+# machine-name-web
 
 ## Tech Stack
 - **Framework**: Next.js
