@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "./components/Header";
+import GoogleAdsense from "./components/GoogleAdsense";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -39,8 +40,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-          <Header />
-          {children}
+        <GoogleAdsense />
+        <Header />
+        {children}
       </body>
     </html>
   );
