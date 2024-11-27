@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import Header from "./components/Header";
-import "./globals.css";
 import Head from "next/head";
+import Header from "./components/Header"
+import Info from "./components/Info";
+import ProviderWrapper from "./providers/ProviderWrapper";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Machine Name",
@@ -31,26 +33,30 @@ export const metadata: Metadata = {
   },
 };
 
-const Id = process.env.GOOGLE_AD_SENSE_ID as string;
+const id = process.env.GOOGLE_AD_SENSE_ID as string;
+const url = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${id}`;
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body>
         <Head>
-          {/* Add the Google AdSense script here */}
           <script
             async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${Id}`}
+            src={url}
             crossOrigin="anonymous"
-          ></script>
+          />
         </Head>
-        <Header />
-        {children}
+        <ProviderWrapper>
+          <Header />
+          {children}
+          <Info />
+        </ProviderWrapper>
       </body>
     </html>
   );
