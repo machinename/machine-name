@@ -80,7 +80,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return () => unsubscribe();
     }, []);
 
-
     const handleError = useCallback((error: unknown) => {
         if (error instanceof FirebaseError) {
             switch (error.code) {
@@ -148,13 +147,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
             Cookies.set('auth_token', token, {
                 path: '/', 
-                // domain: '.machinename.dev', 
-                // secure: true,       
-                // httpOnly: true,        
+                domain: '.machinename.dev', 
+                secure: true,       
+                httpOnly: true,        
                 maxAge: 3600,             
             });
-
-            console.log('Token:', token);
 
             setUser(userCredential.user);
         } catch (error) {
@@ -172,14 +169,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
             Cookies.set('auth_token', token, {
                 path: '/',
-                // domain: '.machinename.dev', 
-                // secure: true,
-                // httpOnly: true,  
+                domain: '.machinename.dev', 
+                secure: true,
+                httpOnly: true,  
                 maxAge: 3600,
             });
 
             setUser(result.user);
-
         } catch (error) {
             handleError(error);
         }
