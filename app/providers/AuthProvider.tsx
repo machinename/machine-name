@@ -100,6 +100,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     const createUserAccount = useCallback(async (email: string, password: string): Promise<void> => {
+        setIsAuthLoading(true);
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             await sendEmailVerification(userCredential.user);
@@ -112,6 +113,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, [handleError]);
 
     const deleteUserAccount = useCallback(async (password: string): Promise<void> => {
+        setIsAuthLoading(true);
         try {
             if (user) {
                 const credential = EmailAuthProvider.credential(user.email!, password);
@@ -122,6 +124,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         } catch (error) {
             handleError(error);
             throw error;
+        } finally {
+            setIsAuthLoading(false);
         }
     }, [handleError, user]);
 
@@ -153,7 +157,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return;
         }
         try {
-            document.cookie = "firebaseToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             await auth.signOut();
             setUser(null);
         } catch (error) {
@@ -191,7 +194,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         try {
             if (user) {
                 await updateProfile(user, { displayName: newDisplayName });
-
             } else {
                 throw new Error('User not found.');
             }
