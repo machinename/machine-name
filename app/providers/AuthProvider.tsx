@@ -27,6 +27,11 @@ import {
     createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from '../firebase';
+import Cookies from 'js-cookie';
+
+const setCookie = (name: string, value: string, options: Cookies.CookieAttributes) => {
+    Cookies.set(name, value, options);
+};
 
 interface AuthContextType {
     authError: string;
@@ -50,6 +55,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [user, setUser] = useState<User | null>(null);
     const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
 
+
+    
     useEffect(() => {
         if (!auth) {
             console.error('Firebase auth is not initialized');
@@ -133,6 +140,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setIsAuthLoading(true);
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const token = await userCredential.user.getIdToken(); 
+            // Save the JWT token in a secure, HTTP-only cookie
+            setCookie('auth_token', token, {
+                path: '/',                 // Available across the whole domain
+                domain: '.machinename.dev',    // Ensure it is accessible across subdomains
+                secure: true,              // Ensures it is only sent over HTTPS
+                httpOnly: true,            // Prevents JavaScript access to the cookie
+                maxAge: 3600,              // Token expiration (1 hour)
+            });
+
             setUser(userCredential.user);
         } catch (error) {
             handleError(error);
