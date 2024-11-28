@@ -29,9 +29,6 @@ import {
 import { auth } from '../firebase';
 import Cookies from 'js-cookie';
 
-const setCookie = (name: string, value: string, options: Cookies.CookieAttributes) => {
-    Cookies.set(name, value, options);
-};
 
 interface AuthContextType {
     authError: string;
@@ -55,12 +52,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [user, setUser] = useState<User | null>(null);
     const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
 
-
     
     useEffect(() => {
         if (!auth) {
             console.error('Firebase auth is not initialized');
             return;
+        }
+
+        const token = Cookies.get('auth_token');
+
+        if (token) {
+            console.log("User is authenticated with token:", token);
+        } else {
+            console.log("User is not authenticated.", token);
         }
         
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -141,14 +145,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const token = await userCredential.user.getIdToken(); 
-            // Save the JWT token in a secure, HTTP-only cookie
-            setCookie('auth_token', token, {
-                path: '/',                 // Available across the whole domain
-                domain: '.machinename.dev',    // Ensure it is accessible across subdomains
-                secure: true,              // Ensures it is only sent over HTTPS
-                httpOnly: true,            // Prevents JavaScript access to the cookie
-                maxAge: 3600,              // Token expiration (1 hour)
+
+            Cookies.set('auth_token', token, {
+                path: '/', 
+                // domain: '.machinename.dev', 
+                // secure: true,       
+                // httpOnly: true,        
+                maxAge: 3600,             
             });
+
+            console.log('Token:', token);
 
             setUser(userCredential.user);
         } catch (error) {
@@ -162,6 +168,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         try {
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
+            const token = await result.user.getIdToken();
+
+            Cookies.set('auth_token', token, {
+                path: '/',
+                // domain: '.machinename.dev', 
+                // secure: true,
+                // httpOnly: true,  
+                maxAge: 3600,
+            });
+
             setUser(result.user);
 
         } catch (error) {
