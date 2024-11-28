@@ -1,6 +1,5 @@
 'use client'
 
-
 import React, {
     createContext,
     useContext,
@@ -56,6 +55,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             console.error('Firebase auth is not initialized');
             return;
         }
+
+        const token = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('token='));
+
+        console.log("Token found in cookie:", token);
         
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setIsAuthLoading(true);
