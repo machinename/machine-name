@@ -16,14 +16,14 @@
 //                 <Link href={'https://github.com/machinename'} target="_blank" rel="noopener noreferrer">
 //                     <IconButton id='icon'>
 //                         <GitHub
-                
+
 //                         />
 //                     </IconButton>
 //                 </Link>
 //                 <Link href="mailto:support@machinename.dev?subject=Support%20Request&body=Please%20describe%20your%20issue%20in%20detail.">
 //                     <IconButton id='icon'>
 //                         <MailOutlined
-                         
+
 //                         />
 //                     </IconButton>
 //                 </Link>
@@ -38,22 +38,16 @@ import React, { Suspense, useEffect, useRef, useState } from 'react';
 import {
     usePathname,
     // useSearchParams, 
-    useRouter
 } from 'next/navigation';
 
 import Link from 'next/link';
-import CircularProgress from '@mui/material/CircularProgress';
 import {
-    AccountBoxOutlined, ArchiveOutlined, CircleOutlined, Close, DeleteOutlined, LoginOutlined,
-    LogoutOutlined, MenuOpen, Refresh, Search,
-    // SettingsOutlined, 
-    Archive, Delete,
+    AccountBoxOutlined, Circle, CircleOutlined, Close, LoginOutlined,
+    LogoutOutlined, MenuOpen,
     HelpCenter,
     HelpCenterOutlined,
-    Circle,
-    // Settings,
-    Lightbulb,
-    LightbulbOutlined,
+    Home,
+    HomeOutlined,
     // Settings,
     // SettingsOutlined
 } from '@mui/icons-material';
@@ -137,18 +131,12 @@ export default function Header() {
         switch (pathname) {
             case '/account':
                 return 'Account';
-            case '/archive':
-                return 'Archive';
             case '/help':
                 return 'Help';
             case '/':
-                return 'Ideas';
-            case '/search':
-                return 'Ideas';
-            case '/trash':
-                return 'Trash';
+                return 'MACHINE NAME';
             default:
-                return 'Ideas';
+                return 'MACHINE NAME';
         }
     };
 
@@ -168,13 +156,7 @@ export default function Header() {
                         {isNavMenuOpen && (
                             <nav className={styles.menu} ref={navMenuRef}>
                                 <Link className={pathname === '/' ? styles.navLinkActive : styles.navLink} href='/'>
-                                    {pathname === '/' ? <Lightbulb /> : <LightbulbOutlined />} Ideas
-                                </Link>
-                                <Link className={pathname === '/archive' ? styles.navLinkActive : styles.navLink} href='/archive'>
-                                    {pathname === '/archive' ? <Archive /> : <ArchiveOutlined />} Archive
-                                </Link>
-                                <Link className={pathname === '/trash' ? styles.navLinkActive : styles.navLink} href='/trash'>
-                                    {pathname === '/trash' ? <Delete /> : <DeleteOutlined />} Trash
+                                    {pathname === '/' ? <Home /> : <HomeOutlined />} Home
                                 </Link>
                                 <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
                                     {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />} Help
@@ -189,7 +171,7 @@ export default function Header() {
                 </div>
                 {/* Nav Trailing */}
                 <div className={styles.headerTrailing}>
-            
+
                     {/* <div className={styles.settingsAnchor}>
                         <StyledIconButton
                             ref={settingsButtonRef}
