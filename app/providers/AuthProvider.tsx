@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return;
         }
 
-        const token = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('token='));
+        const token = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('USER_TOKEN='));
 
         console.log("Token found in cookie:", token);
         
@@ -141,7 +141,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             console.log("User is authenticated with token:", token);
             setUser(userCredential.user);
 
-            document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 7}; domain=.machinename.dev; secure; samesite=strict`;
+            document.cookie = `USER_TOKEN=${token}; path=/; max-age=${60 * 60 * 24 * 7}; domain=.machinename.dev; secure; samesite=strict`;
         } catch (error) {
             handleError(error);
         } finally {
@@ -158,7 +158,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             console.log("User is authenticated with token:", token);
             setUser(result.user);
 
-            document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 7}; domain=.machinename.dev; secure; samesite=strict`;
+            document.cookie = `USER_TOKEN=${token}; path=/; max-age=${60 * 60 * 24 * 7}; domain=.machinename.dev; secure; samesite=strict`;
         } catch (error) {
             handleError(error);
         }
