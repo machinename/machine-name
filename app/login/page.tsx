@@ -91,6 +91,7 @@ export default function Login() {
                 alert('If the email address is registered, a password reset link will be sent to it.');
                 setEmail('');
             } else if (isLogin) {
+
                 if (!password.trim()) {
                     setErrors({ ...errors, password: 'Password is required' });
                     return;
