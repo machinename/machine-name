@@ -27,8 +27,6 @@ import {
     createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from '../firebase';
-import Cookies from 'js-cookie';
-
 
 interface AuthContextType {
     authError: string;
@@ -57,14 +55,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (!auth) {
             console.error('Firebase auth is not initialized');
             return;
-        }
-
-        const token = Cookies.get('auth_token');
-
-        if (token) {
-            console.log("User is authenticated with token:", token);
-        } else {
-            console.log("User is not authenticated.", token);
         }
         
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -145,14 +135,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const token = await userCredential.user.getIdToken(); 
 
-            Cookies.set('auth_token', token, {
-                path: '/', 
-                domain: '.machinename.dev', 
-                secure: true,       
-                httpOnly: true,        
-                maxAge: 3600,             
-            });
-
+            console.log("User is authenticated with token:", token);
             setUser(userCredential.user);
         } catch (error) {
             handleError(error);
@@ -167,14 +150,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const result = await signInWithPopup(auth, provider);
             const token = await result.user.getIdToken();
 
-            Cookies.set('auth_token', token, {
-                path: '/',
-                domain: '.machinename.dev', 
-                secure: true,
-                httpOnly: true,  
-                maxAge: 3600,
-            });
-
+            console.log("User is authenticated with token:", token);
             setUser(result.user);
         } catch (error) {
             handleError(error);
