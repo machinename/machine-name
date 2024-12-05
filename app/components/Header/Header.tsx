@@ -168,7 +168,9 @@ export default function Header() {
                                         <LogoutOutlined /> Log Out
                                     </Link>
                                 ) : (
-                                    <Link className={styles.navLink} href='/login' onClick={() => setIsAccountMenuOpen(false)}>
+                                        <Link className={styles.navLink}
+                                         href={`https://login.machinename.dev/?redirect=https://machinename.dev`}
+                                         onClick={() => setIsAccountMenuOpen(false)}>
                                         <LoginOutlined /> Login
                                     </Link>
                                 )}
