@@ -18,13 +18,13 @@ import {
     reauthenticateWithCredential,
     sendEmailVerification,
     sendPasswordResetEmail,
-    signInWithCustomToken,
+    // signInWithCustomToken,
     updateProfile,
     User, 
     verifyBeforeUpdateEmail
 } from "firebase/auth";
 import { auth } from '../firebase';
-import axios from 'axios';
+// import axios from 'axios';
 
 interface AuthContextType {
     authError: string;
