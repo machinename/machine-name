@@ -45,25 +45,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [user, setUser] = useState<User | null>(null);
     const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (!auth) {
-            console.error('Firebase auth is not initialized');
-            return;
-        }
-
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setIsAuthLoading(true);
-            setUser(currentUser || null);
-            setIsAuthLoading(false);
-        });
-
-        return () => unsubscribe();
-    }, []);
-
-    useEffect(() => {
-        loginWithSessionCookie();
-    }, []);
-
     const handleError = useCallback((error: unknown) => {
         if (error instanceof FirebaseError) {
             const firebaseErrorMessages: { [key: string]: string } = {
@@ -123,7 +104,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return;
         }
         try {
-            const response = await axios.post('http://localhost:8080/logout');
             await auth.signOut();
             setUser(null);
         } catch (error) {
@@ -184,6 +164,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             throw error;
         }
     }, [handleError, user]);
+
+    useEffect(() => {
+        if (!auth) {
+            console.error('Firebase auth is not initialized');
+            return;
+        }
+
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setIsAuthLoading(true);
+            setUser(currentUser || null);
+            setIsAuthLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
+        loginWithSessionCookie();
+    }, [loginWithSessionCookie]);
 
     const contextValue = useMemo(() => ({
         authError,
