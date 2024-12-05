@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import Head from "next/head";
-import Header from "./components/Header"
-import Info from "./components/Info";
+// import Head from "next/head";
+import Header from "./components/Header/Header"
+import Info from "./components/Info/Info";
 import ProviderWrapper from "./providers/ProviderWrapper";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Machine Name",
-  description: "Welcome to Machine Name",
+  title: "Machinename",
+  description: "Welcome to Machinename",
   keywords: "innovation, showcase, open source, projects, technology, creative solutions, paper take",
   authors: [
     { name: "Machine Name" }
   ],
   openGraph: {
-    title: "Machine Name",
+    title: "Machinename",
     description: "Welcome to Machine Name",
     url: 'https://www.machinename.dev',
     siteName: 'Machine Name',
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   },
 };
 
-const id = process.env.GOOGLE_AD_SENSE_ID as string;
-const url = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${id}`;
+// const id = process.env.GOOGLE_AD_SENSE_ID as string;
+// const url = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${id}`;
 
 export default function RootLayout({
   children,
@@ -45,13 +45,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Head>
+        {/* <Head>
           <script
             async
             src={url}
             crossOrigin="anonymous"
           />
-        </Head>
+        </Head> */}
         <ProviderWrapper>
           <Header />
           {children}

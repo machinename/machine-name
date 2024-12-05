@@ -69,72 +69,6 @@ export const BackgroundCircle = styled(Circle)<BackgroundCircleProps>(({ selecte
     },
 }));
 
-export const BackgroundCircleYellow = styled(Circle)<BackgroundCircleProps>(({ selected }) => ({
-    fontSize: '2rem',
-    backgroundColor: '#fff59c',
-    color: 'transparent',
-    border: `2px solid ${selected ? 'purple' : '#fff59c'}`,
-    borderRadius: '50%',
-    '&:hover': {
-        borderColor: 'inherit',
-    },
-    '@media (prefers-color-scheme: dark)': {
-        backgroundColor: '#9c955c',
-        color: 'transparent',
-        border: `2px solid ${selected ? 'purple' : '#9c955c'}`,
-    },
-}));
-
-export const BackgroundCircleMintyGreen = styled(Circle)<BackgroundCircleProps>(({ selected }) => ({
-    fontSize: '2rem',
-    backgroundColor: '#aaf0d1',
-    color: 'transparent',
-    border: `2px solid ${selected ? 'purple' : '#aaf0d1'}`,
-    borderRadius: '50%',
-    '&:hover': {
-        borderColor: 'inherit',
-    },
-    '@media (prefers-color-scheme: dark)': {
-        backgroundColor: '#5f8775',
-        color: 'transparent',
-        border: `2px solid ${selected ? 'purple' : '#5f8775'}`,
-    },
-}));
-
-export const BackgroundCircleTeal = styled(Circle)<BackgroundCircleProps>(({ selected }) => ({
-    fontSize: '2rem',
-    backgroundColor: '#B2DFDB',
-    color: 'transparent',
-    border: `2px solid ${selected ? 'purple' : '#B2DFDB'}`,
-    borderRadius: '50%',
-    '&:hover': {
-        borderColor: 'inherit',
-    },
-    '@media (prefers-color-scheme: dark)': {
-        backgroundColor: '#005c5a',
-        color: 'transparent',
-        border: `2px solid ${selected ? 'purple' : '#005c5a'}`,
-    },
-}
-));
-
-export const BackgroundCircleChalk = styled(Circle)<BackgroundCircleProps>(({ selected }) => ({
-    fontSize: '2rem',
-    backgroundColor: 'lightgray',
-    color: 'transparent',
-    border: `2px solid ${selected ? 'purple' : 'lightgray'}`,
-    borderRadius: '50%',
-    '&:hover': {
-        borderColor: 'inherit',
-    },
-    '@media (prefers-color-scheme: dark)': {
-        backgroundColor: '#8a8a8a',
-        color: 'transparent',
-        border: `2px solid ${selected ? 'purple' : '#8a8a8a'}`,
-    },
-}
-));
-
 export const NoteHeaderTextField = styled(TextField)({
     width: '100%',
     '& .MuiInputBase-input': {
@@ -195,34 +129,6 @@ export const StyledButton = styled(Button)({
     '@media (prefers-color-scheme: dark)': {
         color: 'black',
         backgroundColor: 'lightgray',
-    },
-});
-
-export const StyledNoteButton = styled(Button)({
-    width: '100%',
-    fontFamily: 'monospace',
-    fontWeight: 'lighter',
-    color: 'grey',
-    backgroundColor: 'transparent',
-    borderRadius: defaultBorderRadius,
-    '@media (prefers-color-scheme: dark)': {
-        color: 'grey',
-        backgroundColor: 'transparent',
-    },
-});
-
-export const StyledNoteButtonTwo = styled(Button)({
-    width: '90px',
-    fontFamily: 'monospace',
-    fontWeight: 'lighter',
-    color: '#121212',
-    backgroundColor: 'transparent',
-
-    borderRadius: defaultBorderRadius,
-    '@media (prefers-color-scheme: dark)': {
-        color: 'lightgray',
-        backgroundColor: 'transparent',
-        border: '0.5px solid gray',
     },
 });
 
@@ -302,6 +208,7 @@ export const StyledToggleButton = styled(ToggleButton)({
 
 export const StyledTextButton = styled(Button)({
     borderRadius: defaultBorderRadius,
+    backgroundColor: 'transparent',
     '@media (prefers-color-scheme: dark)': {
         color: 'lightgray',
     }

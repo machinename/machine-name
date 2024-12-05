@@ -12,30 +12,25 @@ import React, {
 
 import { FirebaseError } from 'firebase/app';
 import {
+    EmailAuthProvider,
     deleteUser,
     onAuthStateChanged,
     reauthenticateWithCredential,
     sendEmailVerification,
     sendPasswordResetEmail,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    GoogleAuthProvider,
+    signInWithCustomToken,
     updateProfile,
-    verifyBeforeUpdateEmail,
-    EmailAuthProvider,
-    User,
-    createUserWithEmailAndPassword,
+    User, 
+    verifyBeforeUpdateEmail
 } from "firebase/auth";
 import { auth } from '../firebase';
+import axios from 'axios';
 
 interface AuthContextType {
     authError: string;
     isAuthLoading: boolean;
     user: User | null;
-    createUserAccount: (email: string, password: string) => Promise<void>;
     deleteUserAccount: (password: string) => Promise<void>;
-    logIn: (email: string, password: string) => Promise<void>;
-    logInWithGoogle: () => Promise<void>;
     logOut: () => Promise<void>;
     sendPasswordReset: (email: string) => Promise<void>;
     sendUserVerification: () => Promise<void>;
@@ -56,64 +51,35 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return;
         }
 
-        const token = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('USER_TOKEN='));
-
-        console.log("Token found in cookie:", token);
-        
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setIsAuthLoading(true);
-            if (currentUser) {
-                setUser(currentUser);
-            } else {
-                setUser(null);
-            }
+            setUser(currentUser || null);
             setIsAuthLoading(false);
         });
 
         return () => unsubscribe();
     }, []);
 
-    const handleError = useCallback((error: unknown) => {
-        if (error instanceof FirebaseError) {
-            switch (error.code) {
-                case 'auth/invalid-credential':
-                    setAuthError('Invalid credentials provided');
-                    break;
-                case 'auth/email-already-in-use':
-                    setAuthError('Email already in use');
-                    break;
-                case 'auth/invalid-email':
-                    setAuthError('Invalid email address');
-                    break;
-                case 'auth/operation-not-allowed':
-                    setAuthError('Operation not allowed');
-                    break;
-                case 'auth/weak-password':
-                    setAuthError('The password is too weak');
-                    break;
-                case 'auth/too-many-requests':
-                    setAuthError('Access temporarily disabled due to many failed attempts');
-                    break;
-                default:
-                    setAuthError('Unknown FirebaseError, error.code: ' + error.code);
-            }
-        } else {
-            setAuthError('' + error);
-        }
+    useEffect(() => {
+        loginWithSessionCookie();
     }, []);
 
-    const createUserAccount = useCallback(async (email: string, password: string): Promise<void> => {
-        setIsAuthLoading(true);
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await sendEmailVerification(userCredential.user);
-            setUser(userCredential.user);
-        } catch (error) {
-            handleError(error);
-        } finally {
-            setIsAuthLoading(false);
+    const handleError = useCallback((error: unknown) => {
+        if (error instanceof FirebaseError) {
+            const firebaseErrorMessages: { [key: string]: string } = {
+                'auth/invalid-credential': 'Invalid credentials provided',
+                'auth/email-already-in-use': 'Email already in use',
+                'auth/invalid-email': 'Invalid email address',
+                'auth/operation-not-allowed': 'Operation not allowed',
+                'auth/weak-password': 'The password is too weak',
+                'auth/too-many-requests': 'Access temporarily disabled due to many failed attempts',
+            };
+            setAuthError(firebaseErrorMessages[error.code] || `Unknown FirebaseError: ${error.code}`);
+        } else {
+            setAuthError(String(error));
         }
-    }, [handleError]);
+        console.error(error);
+    }, []);
 
     const deleteUserAccount = useCallback(async (password: string): Promise<void> => {
         setIsAuthLoading(true);
@@ -132,35 +98,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, [handleError, user]);
 
-    const logIn = useCallback(async (email: string, password: string): Promise<void> => {
-        setIsAuthLoading(true);
+    const loginWithSessionCookie = useCallback(async (): Promise<void> => {
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const token = await userCredential.user.getIdToken(); 
+            setIsAuthLoading(true);
 
-            console.log("User is authenticated with token:", token);
-            setUser(userCredential.user);
+            const response = await axios.get('http://localhost:8080/verify', { withCredentials: true });
 
-            document.cookie = `USER_TOKEN=${token}; path=/; max-age=${60 * 60 * 24 * 7}; domain=.machinename.dev; secure; samesite=strict`;
+            if (response.status === 200) {
+                const { customToken } = response.data;
+                await signInWithCustomToken(auth, customToken);
+            } else {
+                throw new Error('Failed to verify session');
+            }
         } catch (error) {
             handleError(error);
+            throw error;
         } finally {
             setIsAuthLoading(false);
-        }
-    }, [handleError]);
-
-    const logInWithGoogle = useCallback(async (): Promise<void> => {
-        try {
-            const provider = new GoogleAuthProvider();
-            const result = await signInWithPopup(auth, provider);
-            const token = await result.user.getIdToken();
-
-            console.log("User is authenticated with token:", token);
-            setUser(result.user);
-
-            document.cookie = `USER_TOKEN=${token}; path=/; max-age=${60 * 60 * 24 * 7}; domain=.machinename.dev; secure; samesite=strict`;
-        } catch (error) {
-            handleError(error);
         }
     }, [handleError]);
 
@@ -169,6 +123,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return;
         }
         try {
+            const response = await axios.post('http://localhost:8080/logout');
             await auth.signOut();
             setUser(null);
         } catch (error) {
@@ -234,10 +189,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         authError,
         isAuthLoading,
         user,
-        createUserAccount,
         deleteUserAccount,
-        logIn,
-        logInWithGoogle,
         logOut,
         sendPasswordReset,
         sendUserVerification,
@@ -247,10 +199,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         authError,
         isAuthLoading,
         user,
-        createUserAccount,
         deleteUserAccount,
-        logIn,
-        logInWithGoogle,
         logOut,
         sendPasswordReset,
         sendUserVerification,

@@ -1,4 +1,5 @@
 .page,
+.pageHome,
 .pageLogin {
   display: flex;
   flex-direction: column;
@@ -12,11 +13,17 @@
   padding-bottom: 5rem;
 }
 
+.pageHome {
+  height: 100vh;
+  justify-content: center;
+}
+
 .pageLogin {
   padding-top: 10%;
   justify-content: center;
 }
 
+.wrapper,
 .wrapperAccount,
 .wrapperLogin,
 .wrapperPopUp {
@@ -25,6 +32,10 @@
   flex-direction: column;
   width: 100%;
   gap: 1rem;
+}
+
+.wrapper {
+  justify-content: center;
 }
 
 .wrapperAccount {
@@ -161,12 +172,6 @@
   font-size: small;
 }
 
-.textButtonContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .pinnedTextContainer {
   display: flex;
   flex-direction: row;
@@ -175,12 +180,19 @@
   /* padding-left: 1rem;
   padding-right: 1rem; */
 }
-
+.switchContainer {
+  position: fixed;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  right: 1rem;
+}
 @media (prefers-color-scheme: dark) {
   .modal {
     background-color: #121212;
   }
-
 
   .containerItem,
   .information {
