@@ -83,14 +83,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         try {
             setIsAuthLoading(true);
 
-            const response = await axios.get('http://localhost:8080/verify', { withCredentials: true });
+            // const response = await axios.get('http://localhost:8080/verify', { withCredentials: true });
 
-            if (response.status === 200) {
-                const { customToken } = response.data;
-                await signInWithCustomToken(auth, customToken);
-            } else {
-                throw new Error('Failed to verify session');
-            }
+            // if (response.status === 200) {
+            //     const { customToken } = response.data;
+            //     await signInWithCustomToken(auth, customToken);
+            // } else {
+            //     throw new Error('Failed to verify session');
+            // }
         } catch (error) {
             handleError(error);
             throw error;
