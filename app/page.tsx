@@ -1,14 +1,19 @@
+'use client'
+
 import Link from "next/link";
 import styles from "./page.module.css";
-import { Button } from "@mui/material";
+import { StyledTextButton } from "./components/Styled";
 
 export default function Home() {
   return (
-    <main className={styles.pageHome}>
+    <main className={styles.page}>
       <div className={styles.wrapper}>
-        <h2>Deploy ML Models with Ease</h2>
+        
+        <h1>Deploy ML Models with Ease</h1>
         <p>Upload your machine learning model and get a live API in seconds.</p>
-        <Button><Link href="/dashboard">Get Started</Link></Button>
+        <StyledTextButton
+        disableRipple={true}
+        ><Link href="/overview">Get Started</Link></StyledTextButton>
       </div>
     </main>
   );

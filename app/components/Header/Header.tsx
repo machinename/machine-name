@@ -14,8 +14,6 @@ import {
     DashboardOutlined,
     HelpCenter,
     HelpCenterOutlined,
-    Upload,
-    UploadOutlined,
     // Settings,
     // SettingsOutlined
 } from '@mui/icons-material';
@@ -85,9 +83,7 @@ export default function Header() {
                 // document.body.classList.add('hide-scrollbar');
             }
         };
-
-        handleScroll();
-
+        
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -109,20 +105,17 @@ export default function Header() {
                         </StyledIconButton>
                         {isNavMenuOpen && (
                             <nav className={styles.menu} ref={navMenuRef}>
-                                <Link className={pathname === '/overview' ? styles.navLinkActive : styles.navLink} href='/overview'>
-                                    {pathname === '/overview' ? <Dashboard /> : <DashboardOutlined />} Overview
-                                </Link>
-                                <Link className={pathname === '/upload' ? styles.navLinkActive : styles.navLink} href='/upload'>
-                                    {pathname === '/upload' ? <Upload /> : <UploadOutlined />} Upload
+                                <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
+                                    {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined/>}Dashboard
                                 </Link>
                                 <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
-                                    {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />} Help
+                                    {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />}Help
                                 </Link>
                             </nav>
                         )}
                     </div>
                     <div className={styles.headerTitle}>
-                        <Link href='/'><p>MACHINENAME</p></Link>
+                        <Link href='/'>MACHINENAME.DEV</Link>
                     </div>
                 </div>
                 {/* Nav Trailing */}

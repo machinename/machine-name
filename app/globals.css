@@ -26,46 +26,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
 a {
   color: inherit;
-  text-decoration: none;
-}
-
-p, h1, h2, h3, h4, h5, h6 {
-  margin: 0;
-}
-
-#icon {
-  color: gray;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-  background-color: lightgrey;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
 }
 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
-  }
-
-  body {
-    background-color: #0a0a0a;
-  }
-
-  a {
-    color: lightgray;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #555;
   }
 }

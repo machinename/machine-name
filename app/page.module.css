@@ -1,170 +1,33 @@
-.page,
-.pageHome,
-.pageLogin {
+.page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.page {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
-.pageHome {
   height: 100vh;
-  justify-content: center;
 }
 
-.pageLogin {
-  padding-top: 10%;
-  justify-content: center;
+.page h1 {
+  font-weight: 300;
 }
 
-.wrapper,
-.wrapperAccount,
-.wrapperLogin,
-.wrapperPopUp {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  gap: 1rem;
+.page p {
+  font-weight: 300;
+}
+
+.page a {
+  text-decoration: none;
 }
 
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-}
-
-.wrapperAccount {
-  max-width: 600px;
-}
-
-.wrapperLogin {
+  width: 100%;
   max-width: 800px;
-}
-
-.wrapperPopUp {
-  max-width: 400px;
-  background-color: white;
-  padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
-}
-
-.wrapperPopUp div {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   gap: 1rem;
-  width: 100%;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  width: 100%;
-  box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
-}
-
-.modal,
-.popUpModal {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* padding-top: 5rem;
-  padding-bottom: 5rem; */
-  /* padding-top: max(10%, 5rem); */
-  padding-left: 1rem;
-  padding-right: 1rem;
-  z-index: 5;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.modal {
-  padding-top: max(10%, 5rem);
-  background-color: white;
-}
-
-.popUpModal {
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-}
-
-.containerItem {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  box-shadow: 0 -1px 1px rgba(0.1, 0.1, 0.1, 0.1);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-
-.containerItem p {
-  font-size: large;
-}
-
-.containerItemHeader {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.containerItemLeading {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 1.5rem;
-  width: 284px;
-}
-
-.containerItemTrailing {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-right: 1.5rem;
-}
-
-.divider {
-  display: flex;
-}
-
-.dividerMobile {
-  display: none;
-}
-
-.login,
-.loginHelp {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-}
-
-.loginHelp {
-  flex-direction: column;
-  align-items: center;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  width: 100%;
-  max-width: 600px;
 }
 
 .textError {
@@ -172,42 +35,9 @@
   font-size: small;
 }
 
-.pinnedTextContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 600px;
-  /* padding-left: 1rem;
-  padding-right: 1rem; */
-}
-.switchContainer {
-  position: fixed;
-  height: 4rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  right: 1rem;
-}
-@media (prefers-color-scheme: dark) {
-  .modal {
-    background-color: #121212;
-  }
-
-  .containerItem,
-  .information {
-    border: 0.5px solid gray;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .divider {
     display: none;
-  }
-
-  .pinnedTextContainer {
-    width: 100%;
-    max-width: 600px;
   }
 
   .dividerMobile {
