@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <main className={styles.page}>
       <div className={styles.wrapper}>
-        
         <h1>Deploy ML Models with Ease</h1>
         <p>Upload your machine learning model and get a live API in seconds.</p>
         <StyledTextButton
