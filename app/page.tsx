@@ -13,7 +13,7 @@ export default function Home() {
         <p>Upload your machine learning model and get a live API in seconds.</p>
         <StyledTextButton
         disableRipple={true}
-        ><Link href="/overview">Get Started</Link></StyledTextButton>
+        ><Link href="/dashboard">Get Started</Link></StyledTextButton>
       </div>
     </main>
   );
