@@ -89,6 +89,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 // const { customToken } = response.data;
                 // await signInWithCustomToken(auth, customToken);
                 // setUser(auth.currentUser);
+                console.log('Successfully verified session');
             } else {
                 throw new Error('Failed to verify session');
             }
