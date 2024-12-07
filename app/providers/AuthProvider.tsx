@@ -79,15 +79,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, [handleError, user]);
 
-    const loginWithSessionCookie = useCallback(async (): Promise<void> => {
+    const logInWithCustomToken = useCallback(async (): Promise<void> => {
         try {
             setIsAuthLoading(true);
 
-            const response = await axios.get('https://services.machinename/verify', { withCredentials: true });
+            const response = await axios.get('https://project-machine-name.uc.r.appspot.com/verify', { withCredentials: true });
 
             if (response.status === 200) {
                 const { customToken } = response.data;
                 await signInWithCustomToken(auth, customToken);
+                setUser(auth.currentUser);
             } else {
                 throw new Error('Failed to verify session');
             }
@@ -181,8 +182,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     useEffect(() => {
-        loginWithSessionCookie();
-    }, [loginWithSessionCookie]);
+        logInWithCustomToken();
+    }, [logInWithCustomToken]);
 
     const contextValue = useMemo(() => ({
         authError,
