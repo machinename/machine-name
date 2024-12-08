@@ -12,25 +12,30 @@ import React, {
 
 import { FirebaseError } from 'firebase/app';
 import {
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
     EmailAuthProvider,
     deleteUser,
     onAuthStateChanged,
     reauthenticateWithCredential,
     sendEmailVerification,
     sendPasswordResetEmail,
-    signInWithCustomToken,
+    signInWithEmailAndPassword,
+    signInWithPopup,
     updateProfile,
     User, 
     verifyBeforeUpdateEmail
 } from "firebase/auth";
 import { auth } from '../firebase';
-import axios from 'axios';
 
 interface AuthContextType {
     authError: string;
     isAuthLoading: boolean;
     user: User | null;
+    createUserAccount: (email: string, password: string) => Promise<void>;
     deleteUserAccount: (password: string) => Promise<void>;
+    logIn: (email: string, password: string) => Promise<void>;
+    logInWithGoogle: () => Promise<void>;
     logOut: () => Promise<void>;
     sendPasswordReset: (email: string) => Promise<void>;
     sendUserVerification: () => Promise<void>;
@@ -62,6 +67,46 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         console.error(error);
     }, []);
 
+    const createUserAccount = useCallback(async (email: string, password: string): Promise<void> => {
+        setIsAuthLoading(true);
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await sendEmailVerification(userCredential.user);
+
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsAuthLoading(false);
+        }
+    }, [handleError]);
+
+    const logIn = useCallback(async (email: string, password: string): Promise<void> => {
+        setIsAuthLoading(true);
+        try {
+            // Step 1: Sign in with email and password
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            setUser(userCredential.user);
+            
+        } catch (error) {
+            handleError(error); // Handle specific error (display error message)
+        } finally {
+            setIsAuthLoading(false); // Reset loading state
+        }
+    }, [handleError]);  // `handleError` is assumed to be defined elsewhere in the component
+
+    const logInWithGoogle = useCallback(async (): Promise<void> => {
+        setIsAuthLoading(true);
+        try {
+            const userCredential = await signInWithPopup(auth, new GoogleAuthProvider());
+            setUser(userCredential.user);
+    
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsAuthLoading(false);
+        }
+    }, [handleError]);
+
     const deleteUserAccount = useCallback(async (password: string): Promise<void> => {
         setIsAuthLoading(true);
         try {
@@ -78,28 +123,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setIsAuthLoading(false);
         }
     }, [handleError, user]);
-
-    const logInWithCustomToken = useCallback(async (): Promise<void> => {
-        try {
-            setIsAuthLoading(true);
-
-            const response = await axios.get('https://project-machine-name.uc.r.appspot.com/verify', { withCredentials: true });
-
-            if (response.status === 200) {
-                const { customToken } = response.data;
-                await signInWithCustomToken(auth, customToken);
-                setUser(auth.currentUser);
-                console.log('Successfully verified session');
-            } else {
-                throw new Error('Failed to verify session');
-            }
-        } catch (error) {
-            handleError(error);
-            throw error;
-        } finally {
-            setIsAuthLoading(false);
-        }
-    }, [handleError]);
 
     const logOut = useCallback(async (): Promise<void> => {
         if (auth === null) {
@@ -182,15 +205,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return () => unsubscribe();
     }, []);
 
-    useEffect(() => {
-        logInWithCustomToken();
-    }, [logInWithCustomToken]);
-
     const contextValue = useMemo(() => ({
         authError,
         isAuthLoading,
         user,
+        createUserAccount,
         deleteUserAccount,
+        logIn,
+        logInWithGoogle,
         logOut,
         sendPasswordReset,
         sendUserVerification,
@@ -200,7 +222,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         authError,
         isAuthLoading,
         user,
+        createUserAccount,
         deleteUserAccount,
+        logIn,
+        logInWithGoogle,
         logOut,
         sendPasswordReset,
         sendUserVerification,
