@@ -44,7 +44,6 @@ export default function Dashboard() {
     return (
         <main className={styles.page}>
             <h2>Your Models</h2>
-
             {models.map((model) => (
                 <div key={model.getId()} className={styles.container}>
                     <div>

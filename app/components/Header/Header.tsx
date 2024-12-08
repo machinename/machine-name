@@ -90,10 +90,6 @@ export default function Header() {
         };
     }, []);
 
-    if (pathname === '/login') {
-        return null;
-    }
-
     return (
         <Suspense>
             <header className={isScrolled ? styles.headerScrolled : styles.header}>
@@ -165,7 +161,7 @@ export default function Header() {
                                     </Link>
                                 ) : (
                                     <Link className={styles.navLink}
-                                        href={`/login`}
+                                        href={`/`}
                                         onClick={() => setIsAccountMenuOpen(false)}>
                                         <LoginOutlined /> Login
                                     </Link>
