@@ -122,7 +122,6 @@ export default function Header() {
                 </div>
                 {/* Nav Trailing */}
                 <div className={styles.headerTrailing}>
-
                     {/* <div className={styles.settingsAnchor}>
                         <StyledIconButton
                             ref={settingsButtonRef}
@@ -166,7 +165,7 @@ export default function Header() {
                                     </Link>
                                 ) : (
                                     <Link className={styles.navLink}
-                                        href={`https://login.machinename.dev/?redirect=https://machinename.dev`}
+                                        href={`/login`}
                                         onClick={() => setIsAccountMenuOpen(false)}>
                                         <LoginOutlined /> Login
                                     </Link>
