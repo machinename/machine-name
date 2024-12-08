@@ -83,7 +83,7 @@ export default function Header() {
                 // document.body.classList.add('hide-scrollbar');
             }
         };
-        
+
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -100,13 +100,15 @@ export default function Header() {
                 {/* Nav Leading */}
                 <div className={styles.headerLeading}>
                     <div className={styles.navAnchor}>
-                        <StyledIconButton ref={navButtonRef} onClick={() => setIsNavMenuOpen(prev => !prev)}>
+                        <StyledIconButton ref={navButtonRef}
+                            disableRipple={true}
+                            onClick={() => setIsNavMenuOpen(prev => !prev)}>
                             {isNavMenuOpen ? <Close /> : <MenuOpen />}
                         </StyledIconButton>
                         {isNavMenuOpen && (
                             <nav className={styles.menu} ref={navMenuRef}>
                                 <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
-                                    {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined/>}Dashboard
+                                    {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
                                 </Link>
                                 <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
                                     {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />}Help
@@ -145,7 +147,9 @@ export default function Header() {
                         )}
                     </div> */}
                     <div className={styles.accountAnchor}>
-                        <StyledIconButton ref={accountButtonRef} onClick={() => setIsAccountMenuOpen(prev => !prev)}>
+                        <StyledIconButton ref={accountButtonRef}
+                            disableRipple={true}
+                            onClick={() => setIsAccountMenuOpen(prev => !prev)}>
                             {isAccountMenuOpen ? <Circle /> : <CircleOutlined />}
                         </StyledIconButton>
                         {isAccountMenuOpen && (
@@ -161,9 +165,9 @@ export default function Header() {
                                         <LogoutOutlined /> Log Out
                                     </Link>
                                 ) : (
-                                        <Link className={styles.navLink}
-                                         href={`https://login.machinename.dev/?redirect=https://machinename.dev`}
-                                         onClick={() => setIsAccountMenuOpen(false)}>
+                                    <Link className={styles.navLink}
+                                        href={`https://login.machinename.dev/?redirect=https://machinename.dev`}
+                                        onClick={() => setIsAccountMenuOpen(false)}>
                                         <LoginOutlined /> Login
                                     </Link>
                                 )}
