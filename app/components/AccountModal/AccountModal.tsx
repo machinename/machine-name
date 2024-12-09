@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './AccountModal.module.css';
-import { useAuthContext } from '../../providers/AuthProvider';
 import { useAppContext } from '../../providers/AppProvider';
 import {
     InputAdornment
 } from '@mui/material';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 import {
     VisibilityOffOutlined, VisibilityOutlined
@@ -22,10 +22,10 @@ interface AccountModalProps {
 }
 
 const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) => {
-    const Router = useRouter();
-
-    const { authError, user, sendPasswordReset, updateUserDisplayName, updateUserEmail,
-        deleteUserAccount, sendUserVerification } = useAuthContext();
+    const Router = useRouter(); 
+    const { user, error
+        // error, isLoading 
+    } = useUser();
 
     const { setInfo } = useAppContext();
 
@@ -51,7 +51,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
     }
 
     const handleRemoveDisplayName = () => {
-        updateUserDisplayName('');
+        // updateUserDisplayName('');
         clearValues();
     }
 
@@ -67,21 +67,21 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                         setErrors({ ...errors, email: 'Email is the same as current email' });
                         return;
                     }
-                    await updateUserEmail(email, password);
+                    // await updateUserEmail(email, password);
                     clearValues();
                     setInfo('Please verify your new email address');
                     break;
 
                 case "password":
                     if (user?.email) {
-                        await sendPasswordReset(user?.email);
+                        // await sendPasswordReset(user?.email);
                         clearValues();
                         setInfo('Password reset link sent to your email');
                     }
                     break;
 
                 case "deleteAccount":
-                    await deleteUserAccount(password);
+                    // await deleteUserAccount(password);
                     clearValues();
                     Router.push('/');
                     setInfo('Account deleted successfully');
@@ -92,7 +92,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                         setErrors({ ...errors, displayName: 'Display name is the same as current display name' });
                         return;
                     }
-                    await updateUserDisplayName(newDisplayName);
+                    // await updateUserDisplayName(newDisplayName);
                     clearValues();
                     setInfo('Display name updated successfully');
                     break;
@@ -102,7 +102,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                         setErrors({ ...errors, email: 'Email is not the same as current email' });
                         return;
                     }
-                    await sendUserVerification();
+                    // await sendUserVerification();
                     clearValues();
                     setInfo('Please verify your new email address');
                     break;
@@ -165,7 +165,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                 return (
                     <React.Fragment>
                         <h1>Update display name</h1>
-                        {user?.displayName && (<p>{user.displayName}</p>)}
+                        {user?.nickname && (<p>{user.nickname}</p>)}
                         <p>To continue, type your new display name below</p>
                     </React.Fragment>
                 );
@@ -267,7 +267,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                         <React.Fragment>
                             {errors.email && (<p className={styles.textError} aria-live="polite">{errors.email}</p>)}
                             {errors.password && (<p className={styles.textError} aria-live="polite">{errors.password}</p>)}
-                            {authError && (<p className={styles.textError} aria-live="polite">{authError}</p>)}
+                            {error && (<p className={styles.textError} aria-live="polite">{error.message}</p>)}
                             {
                                 screen === "password" ?
                                     <StyledButton className={styles.button} disabled={!isButtonEnabled()} type="submit">
@@ -279,7 +279,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                                     </StyledButton>
                             }
                             {
-                                (screen === "displayName" && user?.displayName) && (
+                                (screen === "displayName" && user?.nickname) && (
                                     <StyledButton className={styles.button} type="button" onClick={handleRemoveDisplayName}>
                                         Remove Display Name
                                     </StyledButton>

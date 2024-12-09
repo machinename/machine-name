@@ -2,19 +2,31 @@
 
 import { useState } from 'react';
 import styles from "../page.module.css";
-import { useAuthContext } from "../providers/AuthProvider";
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import AccountModal from '../components/AccountModal/AccountModal';
 import Link from 'next/link';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function Account() {
-    const { user } = useAuthContext();
+    const { user,
+        // error, isLoading 
+    } = useUser();
     const [screen, setScreen] = useState('');
     const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
 
     const pushTo = (screen: string) => {
         setScreen(screen);
         setIsAccountModalOpen(true);
+    };
+
+    if (!user) {
+        return (
+            <div className={styles.page}>
+                <div className={styles.wrapperAccount}>
+                    <div>You need to be logged in to view this page.</div>;
+                </div>
+            </div>
+        );
     };
 
     return (
@@ -50,7 +62,7 @@ export default function Account() {
                     <div className={styles.containerItem} onClick={() => pushTo('displayName')} >
                         <div className={styles.containerItemLeading}>
                             <p>Display name</p>
-                            <p>{user?.displayName}</p>
+                            <p>{user?.nickname}</p>
                         </div>
                         <div className={styles.containerItemTrailing}>
                             <ArrowForwardIos />
