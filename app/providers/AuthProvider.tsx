@@ -17,26 +17,20 @@ import {
     reauthenticateWithCredential,
     sendEmailVerification,
     sendPasswordResetEmail,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    GoogleAuthProvider,
     updateProfile,
     verifyBeforeUpdateEmail,
     EmailAuthProvider,
     User,
-    createUserWithEmailAndPassword,
     signInWithCustomToken,
 } from "firebase/auth";
 import { auth } from '../firebase';
+import Cookies from 'js-cookie';
 
 interface AuthContextType {
     authError: string;
     isAuthLoading: boolean;
     user: User | null;
-    createUserAccount: (email: string, password: string) => Promise<void>;
     deleteUserAccount: (password: string) => Promise<void>;
-    logIn: (email: string, password: string) => Promise<void>;
-    logInWithGoogle: () => Promise<void>;
     logOut: () => Promise<void>;
     sendPasswordReset: (email: string) => Promise<void>;
     sendUserVerification: () => Promise<void>;
@@ -57,12 +51,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return;
         }
 
-        const token = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('USER_TOKEN='));
+        const token = Cookies.get('MNFBCT');
 
         if (token) {
-            const userToken = token.split('=')[1];
-
-            signInWithCustomToken(auth, userToken)
+            signInWithCustomToken(auth, token)
                 .then((userCredential) => {
                     setUser(userCredential.user);
                 })
@@ -71,12 +63,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                     setUser(null);
                 });
         } else {
-            console.log('No USER_TOKEN found in cookies.');
+            console.log('No MNFBCT token found in cookies.');
         }
 
-
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-
             setIsAuthLoading(true);
             if (currentUser) {
                 setUser(currentUser);
@@ -118,18 +108,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, []);
 
-    const createUserAccount = useCallback(async (email: string, password: string): Promise<void> => {
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await sendEmailVerification(userCredential.user);
-            setUser(userCredential.user);
-        } catch (error) {
-            handleError(error);
-        } finally {
-            setIsAuthLoading(false);
-        }
-    }, [handleError]);
-
     const deleteUserAccount = useCallback(async (password: string): Promise<void> => {
         try {
             if (user) {
@@ -143,28 +121,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             throw error;
         }
     }, [handleError, user]);
-
-    const logIn = useCallback(async (email: string, password: string): Promise<void> => {
-        setIsAuthLoading(true);
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            setUser(userCredential.user);
-        } catch (error) {
-            handleError(error);
-        } finally {
-            setIsAuthLoading(false);
-        }
-    }, [handleError]);
-
-    const logInWithGoogle = useCallback(async (): Promise<void> => {
-        try {
-            const provider = new GoogleAuthProvider();
-            const result = await signInWithPopup(auth, provider);
-            setUser(result.user);
-        } catch (error) {
-            handleError(error);
-        }
-    }, [handleError]);
 
     const logOut = useCallback(async (): Promise<void> => {
         try {
@@ -230,10 +186,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         authError,
         isAuthLoading,
         user,
-        createUserAccount,
         deleteUserAccount,
-        logIn,
-        logInWithGoogle,
         logOut,
         sendPasswordReset,
         sendUserVerification,
@@ -243,10 +196,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         authError,
         isAuthLoading,
         user,
-        createUserAccount,
         deleteUserAccount,
-        logIn,
-        logInWithGoogle,
         logOut,
         sendPasswordReset,
         sendUserVerification,
