@@ -20,7 +20,7 @@ export default function Account() {
     if (!user) {
         return (
             <div className={styles.page}>
-                <div className={styles.wrapperAccount}>
+                <div className={styles.wrapper}>
                     <div>You need to be logged in to view this page.</div>;
                 </div>
             </div>
@@ -29,7 +29,7 @@ export default function Account() {
 
     return (
         <div className={styles.page}>
-            <div className={styles.wrapperAccount}>
+            <div className={styles.wrapper}>
                 <div className={styles.container}>
                     <div className={styles.containerItemHeader}>
                         <h1>Personal Info</h1>
