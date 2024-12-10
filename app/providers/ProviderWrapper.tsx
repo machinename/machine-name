@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import { AppProvider } from './AppProvider';
-import { UserProvider } from '@auth0/nextjs-auth0/client';
-// import { AuthProvider } from './AuthProvider';
+import { AuthProvider } from './AuthProvider';
 
 interface ProviderWrapperProps {
     children: ReactNode;
@@ -9,13 +8,11 @@ interface ProviderWrapperProps {
 
 const ProviderWrapper: React.FC<ProviderWrapperProps> = ({ children }) => {
     return (
-        // <AuthProvider>
-        <UserProvider>
+        <AuthProvider>
             <AppProvider>
                 {children}
             </AppProvider>
-        </UserProvider>
-        // </AuthProvider>
+        </AuthProvider>
     );
 };
 

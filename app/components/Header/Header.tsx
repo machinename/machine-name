@@ -5,7 +5,6 @@ import {
     usePathname,
     // useSearchParams, 
 } from 'next/navigation';
-import { useUser } from '@auth0/nextjs-auth0/client';
 
 import Link from 'next/link';
 import {
@@ -20,17 +19,14 @@ import {
     // SettingsOutlined
 } from '@mui/icons-material';
 
-// import { useAuthContext } from '../../providers/AuthProvider';
+import { useAuthContext } from '../../providers/AuthProvider';
 import styles from "./Header.module.css";
 import { StyledIconButton } from '../Styled';
 
 export default function Header() {
-    const { user, 
-        // error, isLoading 
-    } = useUser();
-    // const { 
-    //     logOut, 
-    //     user } = useAuthContext();
+    const { 
+        logOut, 
+        user } = useAuthContext();
 
     const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
     const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
@@ -48,7 +44,7 @@ export default function Header() {
 
     const handleLogOut = async () => {
         try {
-            // await logOut();
+            await logOut();
             setIsAccountMenuOpen(false);
         } catch (error) {
             console.log(error);
@@ -164,19 +160,17 @@ export default function Header() {
                                     </Link>
                                 )}
                                 {user ? (
-                                    // <Link className={styles.navLink} 
-                                    //     href='/' 
-                                    //     onClick={handleLogOut}>
-                                    //     <LogoutOutlined /> Log Out
-                                    // </Link>
-                                    <a className={styles.navLink} href="/api/auth/logout" onClick={handleLogOut}><LogoutOutlined /> Log Out</a>
+                                    <Link className={styles.navLink} 
+                                        href='/' 
+                                        onClick={handleLogOut}>
+                                        <LogoutOutlined /> Log Out
+                                    </Link>
                                 ) : (
-                                    // <Link className={styles.navLink}
-                                    //     href={`/`}
-                                    //     onClick={() => setIsAccountMenuOpen(false)}>
-                                    //     <LoginOutlined /> Log In
-                                    // </Link>
-                                    <a className={styles.navLink} href="/api/auth/login" onClick={handleLogOut}><LoginOutlined /> Log In</a>
+                                    <Link className={styles.navLink}
+                                        href='https://login.machinename.dev/?redirect=/www.machinename.dev' 
+                                        onClick={() => setIsAccountMenuOpen(false)}>
+                                        <LoginOutlined /> Log In
+                                    </Link>
                                 )}
                             </nav>
                         )}

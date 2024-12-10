@@ -7,13 +7,13 @@ import { useAppContext } from '../../providers/AppProvider';
 import {
     InputAdornment
 } from '@mui/material';
-import { useUser } from '@auth0/nextjs-auth0/client';
 
 import {
     VisibilityOffOutlined, VisibilityOutlined
 } from '@mui/icons-material';
 
 import { StyledButton, FormTextField } from '../Styled';
+import { useAuthContext } from '@/app/providers/AuthProvider';
 
 interface AccountModalProps {
     isOpen: boolean;
@@ -23,9 +23,7 @@ interface AccountModalProps {
 
 const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) => {
     const Router = useRouter(); 
-    const { user, error
-        // error, isLoading 
-    } = useUser();
+    const { authError, user } = useAuthContext();
 
     const { setInfo } = useAppContext();
 
@@ -165,7 +163,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                 return (
                     <React.Fragment>
                         <h1>Update display name</h1>
-                        {user?.nickname && (<p>{user.nickname}</p>)}
+                        {user?.displayName && (<p>{user.displayName}</p>)}
                         <p>To continue, type your new display name below</p>
                     </React.Fragment>
                 );
@@ -267,11 +265,11 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                         <React.Fragment>
                             {errors.email && (<p className={styles.textError} aria-live="polite">{errors.email}</p>)}
                             {errors.password && (<p className={styles.textError} aria-live="polite">{errors.password}</p>)}
-                            {error && (<p className={styles.textError} aria-live="polite">{error.message}</p>)}
-                            {
+                            {authError && (<p className={styles.textError} aria-live="polite">{authError}</p>)}
+                            {                       
                                 screen === "password" ?
                                     <StyledButton className={styles.button} disabled={!isButtonEnabled()} type="submit">
-                                        Send
+                                        Send                      
                                     </StyledButton>
                                     :
                                     <StyledButton className={styles.button} disabled={!isButtonEnabled()} type="submit">
@@ -279,7 +277,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                                     </StyledButton>
                             }
                             {
-                                (screen === "displayName" && user?.nickname) && (
+                                (screen === "displayName" && user?.displayName) && (
                                     <StyledButton className={styles.button} type="button" onClick={handleRemoveDisplayName}>
                                         Remove Display Name
                                     </StyledButton>

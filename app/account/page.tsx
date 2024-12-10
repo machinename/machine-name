@@ -5,12 +5,10 @@ import styles from "../page.module.css";
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import AccountModal from '../components/AccountModal/AccountModal';
 import Link from 'next/link';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useAuthContext } from '../providers/AuthProvider';
 
 export default function Account() {
-    const { user,
-        // error, isLoading 
-    } = useUser();
+    const { user } = useAuthContext();
     const [screen, setScreen] = useState('');
     const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
 
@@ -62,7 +60,7 @@ export default function Account() {
                     <div className={styles.containerItem} onClick={() => pushTo('displayName')} >
                         <div className={styles.containerItemLeading}>
                             <p>Display name</p>
-                            <p>{user?.nickname}</p>
+                            <p>{user?.displayName}</p>
                         </div>
                         <div className={styles.containerItemTrailing}>
                             <ArrowForwardIos />
