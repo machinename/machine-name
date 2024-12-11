@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 const token = Cookies.get('SNMNCT');
                 if (token) {
                     const userCredential = await signInWithCustomToken(auth, token);
-                    Cookies.remove('SNMNCT', { domain: '.machinename.dev', path: '/' }); // Specify domain and path
+                    Cookies.remove('SNMNCT', { domain: '.machinename.dev', path: '/' });
                     setUser(userCredential.user);
                 }
             } catch (err) {
@@ -213,4 +213,3 @@ export const useAuthContext = (): AuthContextType => {
     }
     return context;
 };
-
