@@ -48,7 +48,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     useEffect(() => {
         if (!auth) {
-            console.error('Firebase auth is not initialized');
+            setAuthError('Firebase Auth not initialized');
             return;
         }
         const fetchUser = async () => {
@@ -57,12 +57,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 const token = Cookies.get('MNFBCT');
                 if (token) {
                     const userCredential = await signInWithCustomToken(auth, token);
+                    Cookies.remove('MNFBCT');
                     setUser(userCredential.user);
-                } else {
-                    console.log('No MNFBCT token found in cookies.');
                 }
             } catch (err) {
-                console.error('Error fetching user:', err);
                 setAuthError('Session expired or invalid.');
             } finally {
                 setIsAuthLoading(false);
