@@ -21,11 +21,11 @@ import {
     verifyBeforeUpdateEmail,
     EmailAuthProvider,
     User,
-    // signInWithCustomToken,
+    signInWithCustomToken,
 } from "firebase/auth";
 import { auth } from '../firebase';
-import axios from 'axios';
-// import Cookies from 'js-cookie';
+// import axios from 'axios';
+import Cookies from 'js-cookie';
 
 interface AuthContextType {
     authError: string;
@@ -54,17 +54,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const fetchUser = async () => {
             setIsAuthLoading(true);
             try {
-                // const token = Cookies.get('MNFBCT');
-                // if (token) {
-                //     const userCredential = await signInWithCustomToken(auth, token);
-                //     setUser(userCredential.user);
-                // } else {
-                //     console.log('No MNFBCT token found in cookies.');
-                // }
-                const res = await axios.post('https://auth.machinename.dev/verify', {
-                    withCredentials: true,
-                });
-                setUser(res.data.user);
+                const token = Cookies.get('MNFBCT');
+                if (token) {
+                    const userCredential = await signInWithCustomToken(auth, token);
+                    setUser(userCredential.user);
+                } else {
+                    console.log('No MNFBCT token found in cookies.');
+                }
             } catch (err) {
                 console.error('Error fetching user:', err);
                 setAuthError('Session expired or invalid.');
