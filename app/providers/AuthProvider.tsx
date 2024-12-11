@@ -21,10 +21,11 @@ import {
     verifyBeforeUpdateEmail,
     EmailAuthProvider,
     User,
-    signInWithCustomToken,
+    // signInWithCustomToken,
 } from "firebase/auth";
 import { auth } from '../firebase';
-import Cookies from 'js-cookie';
+import axios from 'axios';
+// import Cookies from 'js-cookie';
 
 interface AuthContextType {
     authError: string;
@@ -50,32 +51,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             console.error('Firebase auth is not initialized');
             return;
         }
-
-        const token = Cookies.get('MNFBCT');
-
-        if (token) {
-            signInWithCustomToken(auth, token)
-                .then((userCredential) => {
-                    setUser(userCredential.user);
-                })
-                .catch((error) => {
-                    console.error('Error authenticating with token:', error);
-                    setUser(null);
+        const fetchUser = async () => {
+            setIsAuthLoading(true);
+            try {
+                // const token = Cookies.get('MNFBCT');
+                // if (token) {
+                //     const userCredential = await signInWithCustomToken(auth, token);
+                //     setUser(userCredential.user);
+                // } else {
+                //     console.log('No MNFBCT token found in cookies.');
+                // }
+                const res = await axios.post('https://auth.machinename.dev/verify', {
+                    withCredentials: true,
                 });
-        } else {
-            console.log('No MNFBCT token found in cookies.');
-        }
-
+                setUser(res.data.user);
+            } catch (err) {
+                console.error('Error fetching user:', err);
+                setAuthError('Session expired or invalid.');
+            } finally {
+                setIsAuthLoading(false);
+            }
+        };
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setIsAuthLoading(true);
-            if (currentUser) {
-                setUser(currentUser);
-            } else {
-                setUser(null);
-            }
+            setUser(currentUser || null);
             setIsAuthLoading(false);
         });
-
+        fetchUser();
         return () => unsubscribe();
     }, []);
 
