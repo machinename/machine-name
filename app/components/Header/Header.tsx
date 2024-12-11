@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     usePathname,
     // useSearchParams, 
@@ -94,7 +94,6 @@ export default function Header() {
     }, []);
 
     return (
-        <Suspense>
             <header className={isScrolled ? styles.headerScrolled : styles.header}>
                 {/* Nav Leading */}
                 <div className={styles.headerLeading}>
@@ -177,6 +176,5 @@ export default function Header() {
                     </div>
                 </div>
             </header>
-        </Suspense>
     );
 }

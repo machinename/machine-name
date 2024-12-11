@@ -56,7 +56,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 const token = Cookies.get('SNMNCT');
                 if (token) {
                     const userCredential = await signInWithCustomToken(auth, token);
-                    Cookies.remove('SNMNCT', { domain: '.machinename.dev', path: '/' });
                     setUser(userCredential.user);
                 }
             } catch (err) {
@@ -120,6 +119,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const logOut = useCallback(async (): Promise<void> => {
         try {
             await auth.signOut();
+            Cookies.remove('SNMNCT', { domain: '.machinename.dev', path: '/' });
             setUser(null);
         } catch (error) {
             handleError(error);
