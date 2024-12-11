@@ -53,9 +53,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setIsAuthLoading(true);
             try {
                 const token = Cookies.get('SNMNCT');
-                if (token) {
+                if (token && !user) {
                     const userCredential = await signInWithCustomToken(auth, token);
                     setUser(userCredential.user);
+                } else if (!token && user) {
+                    await auth.signOut();
+                    setUser(null);
                 }
             } catch (err) {
                 setAuthError('Session expired or invalid.');
