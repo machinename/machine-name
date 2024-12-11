@@ -12,8 +12,10 @@ import {
     MenuOpen,
     Dashboard,
     DashboardOutlined,
-    HelpCenter,
-    HelpCenterOutlined,
+    // HelpCenter,
+    // HelpCenterOutlined,
+    ArrowRightOutlined,
+    Note,
     // Settings,
     // SettingsOutlined
 } from '@mui/icons-material';
@@ -108,8 +110,8 @@ export default function Header() {
                             <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
                                 {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
                             </Link>
-                            <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
-                                {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />}Help
+                            <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
+                                <Note /> Ideas <ArrowRightOutlined/>
                             </Link>
                         </nav>
                     )}
