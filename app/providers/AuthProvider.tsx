@@ -21,7 +21,7 @@ import {
     verifyBeforeUpdateEmail,
     EmailAuthProvider,
     User,
-    // signInWithCustomToken,
+    signInWithCustomToken,
 } from "firebase/auth";
 import { auth } from '../firebase';
 import Cookies from 'js-cookie';
@@ -55,11 +55,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             try {
                 const token = Cookies.get('SNMNCT');
                 if (token) {
-                    console.log('Token found:', token); // Log the token value
-                    // const userCredential = await signInWithCustomToken(auth, token);
+                    const userCredential = await signInWithCustomToken(auth, token);
                     Cookies.remove('SNMNCT', { domain: '.machinename.dev', path: '/' }); // Specify domain and path
-                    console.log('Token removed'); // Log after removing the token
-                    // setUser(userCredential.user);
+                    setUser(userCredential.user);
                 }
             } catch (err) {
                 setAuthError('Session expired or invalid.');
