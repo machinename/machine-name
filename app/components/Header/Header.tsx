@@ -12,10 +12,10 @@ import {
     MenuOpen,
     Dashboard,
     DashboardOutlined,
-    // HelpCenter,
-    // HelpCenterOutlined,
-    ArrowRightOutlined,
-    Note,
+    HelpCenter,
+    HelpCenterOutlined,
+    AccountTree,
+    AccountTreeOutlined,
     // Settings,
     // SettingsOutlined
 } from '@mui/icons-material';
@@ -110,8 +110,11 @@ export default function Header() {
                             <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
                                 {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
                             </Link>
-                            <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
-                                <Note /> Ideas <ArrowRightOutlined/>
+                            <Link className={pathname === '/projects' ? styles.navLinkActive : styles.navLink} href='/projects'>
+                                {pathname === '/dashboard' ? <AccountTree /> : <AccountTreeOutlined />}Dashboard
+                            </Link>        
+                            <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
+                                {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />}Help
                             </Link>
                         </nav>
                     )}
