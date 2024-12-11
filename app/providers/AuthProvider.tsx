@@ -24,7 +24,6 @@ import {
     // signInWithCustomToken,
 } from "firebase/auth";
 import { auth } from '../firebase';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 
 interface AuthContextType {
@@ -52,10 +51,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return;
         }
         const fetchUser = async () => {
-            const response = await axios.post('https://auth.machinename.dev/verify', {
-                withCredentials: true
-            });
-            console.log(response.data);
             setIsAuthLoading(true);
             try {
                 const token = Cookies.get('SNMNCT');
