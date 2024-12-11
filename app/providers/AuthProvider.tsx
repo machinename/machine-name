@@ -10,7 +10,6 @@ import React, {
     ReactNode,
 } from 'react';
 
-import { FirebaseError } from 'firebase/app';
 import {
     deleteUser,
     onAuthStateChanged,
@@ -73,35 +72,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return () => unsubscribe();
     }, []);
 
-    const handleError = useCallback((error: unknown) => {
-        if (error instanceof FirebaseError) {
-            switch (error.code) {
-                case 'auth/invalid-credential':
-                    setAuthError('Invalid credentials provided');
-                    break;
-                case 'auth/email-already-in-use':
-                    setAuthError('Email already in use');
-                    break;
-                case 'auth/invalid-email':
-                    setAuthError('Invalid email address');
-                    break;
-                case 'auth/operation-not-allowed':
-                    setAuthError('Operation not allowed');
-                    break;
-                case 'auth/weak-password':
-                    setAuthError('The password is too weak');
-                    break;
-                case 'auth/too-many-requests':
-                    setAuthError('Access temporarily disabled due to many failed attempts');
-                    break;
-                default:
-                    setAuthError('Unknown FirebaseError, error.code: ' + error.code);
-            }
-        } else {
-            setAuthError('' + error);
-        }
-    }, []);
-
     const deleteUserAccount = useCallback(async (password: string): Promise<void> => {
         try {
             if (user) {
@@ -111,10 +81,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 setUser(null);
             }
         } catch (error) {
-            handleError(error);
+            setAuthError('' + error);
             throw error;
         }
-    }, [handleError, user]);
+    }, [user]);
 
     const logOut = useCallback(async (): Promise<void> => {
         try {
@@ -122,19 +92,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             Cookies.remove('SNMNCT', { domain: '.machinename.dev', path: '/' });
             setUser(null);
         } catch (error) {
-            handleError(error);
+            setAuthError('' + error);
             throw error;
         }
-    }, [handleError]);
+    }, []);
 
     const sendPasswordReset = useCallback(async (email: string): Promise<void> => {
         try {
             await sendPasswordResetEmail(auth, email);
         } catch (error) {
-            handleError(error);
+            setAuthError('' + error);
             throw error;
         }
-    }, [handleError]);
+    }, []);
 
     const sendUserVerification = useCallback(async (): Promise<void> => {
         try {
@@ -144,10 +114,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 throw new Error('User not found.');
             }
         } catch (error) {
-            handleError(error);
+            setAuthError('' + error);
             throw error;
         }
-    }, [handleError, user]);
+    }, [user]);
 
     const updateUserDisplayName = useCallback(async (newDisplayName: string): Promise<void> => {
         try {
@@ -157,10 +127,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 throw new Error('User not found.');
             }
         } catch (error) {
-            handleError(error);
+            setAuthError('' + error);
             throw error;
         }
-    }, [handleError, user]);
+    }, [ user]);
 
     const updateUserEmail = useCallback(async (newEmail: string, password: string): Promise<void> => {
         try {
@@ -172,10 +142,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 throw new Error('User not found.');
             }
         } catch (error) {
-            handleError(error);
+            setAuthError('' + error);
             throw error;
         }
-    }, [handleError, user]);
+    }, [user]);
 
     const contextValue = useMemo(() => ({
         authError,
