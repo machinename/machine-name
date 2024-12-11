@@ -55,8 +55,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             try {
                 const token = Cookies.get('SNMNCT');
                 if (token) {
+                    console.log('Token found:', token); // Log the token value
                     // const userCredential = await signInWithCustomToken(auth, token);
-                    Cookies.remove('SNMNCT');
+                    Cookies.remove('SNMNCT', { domain: '.machinename.dev', path: '/' }); // Specify domain and path
+                    console.log('Token removed'); // Log after removing the token
                     // setUser(userCredential.user);
                 }
             } catch (err) {
