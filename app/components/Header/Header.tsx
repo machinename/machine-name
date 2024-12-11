@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
     usePathname,
-    // useSearchParams, 
 } from 'next/navigation';
 
 import Link from 'next/link';
@@ -22,10 +21,12 @@ import {
 import { useAuthContext } from '../../providers/AuthProvider';
 import styles from "./Header.module.css";
 import { StyledIconButton } from '../Styled';
+import { CircularProgress } from '@mui/material';
 
 export default function Header() {
-    const { 
-        logOut, 
+    const {
+        isAuthLoading,
+        logOut,
         user } = useAuthContext();
 
     const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
@@ -94,34 +95,41 @@ export default function Header() {
     }, []);
 
     return (
-            <header className={isScrolled ? styles.headerScrolled : styles.header}>
-                {/* Nav Leading */}
-                <div className={styles.headerLeading}>
-                    <div className={styles.navAnchor}>
-                        <StyledIconButton ref={navButtonRef}
+        <header className={isScrolled ? styles.headerScrolled : styles.header}>
+            {/* Nav Leading */}
+            <div className={styles.headerLeading}>
+                <div className={styles.navAnchor}>
+                    <StyledIconButton ref={navButtonRef}
 
-                            disableTouchRipple={true}
-                            onClick={() => setIsNavMenuOpen(prev => !prev)}>
-                            {isNavMenuOpen ? <Close /> : <MenuOpen />}
-                        </StyledIconButton>
-                        {isNavMenuOpen && (
-                            <nav className={styles.menu} ref={navMenuRef}>
-                                <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
-                                    {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
-                                </Link>
-                                <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
-                                    {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />}Help
-                                </Link>
-                            </nav>
-                        )}
-                    </div>
-                    <div className={styles.headerTitle}>
-                        <Link href='/'>MACHINENAME.DEV</Link>
-                    </div>
+                        disableTouchRipple={true}
+                        onClick={() => setIsNavMenuOpen(prev => !prev)}>
+                        {isNavMenuOpen ? <Close /> : <MenuOpen />}
+                    </StyledIconButton>
+                    {isNavMenuOpen && (
+                        <nav className={styles.menu} ref={navMenuRef}>
+                            <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
+                                {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
+                            </Link>
+                            <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
+                                {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />}Help
+                            </Link>
+                        </nav>
+                    )}
                 </div>
-                {/* Nav Trailing */}
-                <div className={styles.headerTrailing}>
-                    {/* <div className={styles.settingsAnchor}>
+                <div className={styles.headerTitle}>
+                    <Link href='/'>MACHINENAME.DEV</Link>
+                </div>
+            </div>
+            {/* Nav Trailing */}
+            <div className={styles.headerTrailing}>
+                {
+                    isAuthLoading && (
+                        <StyledIconButton>
+                            <CircularProgress size={20} />
+                        </StyledIconButton>
+                    )
+                }
+                {/* <div className={styles.settingsAnchor}>
                         <StyledIconButton
                             ref={settingsButtonRef}
                             onClick={() => setIsSettingsMenuOpen(prev => !prev)}>
@@ -144,37 +152,37 @@ export default function Header() {
                             </nav>
                         )}
                     </div> */}
-                    <div className={styles.accountAnchor}>
-                        <StyledIconButton ref={accountButtonRef}
-                            disableTouchRipple={true}
-                            onClick={() => setIsAccountMenuOpen(prev => !prev)}>
-                            {isAccountMenuOpen ? <Circle /> : <CircleOutlined />}
-                        </StyledIconButton>
-                        {isAccountMenuOpen && (
-                            <nav className={styles.menu} ref={accountMenuRef}>
-                                {user && (
-                                    <Link className={styles.navLink}
-                                        onClick={() => setIsAccountMenuOpen(false)} href='/account'>
-                                        <AccountBoxOutlined /> Account
-                                    </Link>
-                                )}
-                                {user ? (
-                                    <Link className={styles.navLink} 
-                                        href='/' 
-                                        onClick={handleLogOut}>
-                                        <LogoutOutlined /> Log Out
-                                    </Link>
-                                ) : (
-                                    <Link className={styles.navLink}
-                                        href='https://login.machinename.dev/?redirect=/www.machinename.dev' 
-                                        onClick={() => setIsAccountMenuOpen(false)}>
-                                        <LoginOutlined /> Log In
-                                    </Link>
-                                )}
-                            </nav>
-                        )}
-                    </div>
+                <div className={styles.accountAnchor}>
+                    <StyledIconButton ref={accountButtonRef}
+                        disableTouchRipple={true}
+                        onClick={() => setIsAccountMenuOpen(prev => !prev)}>
+                        {isAccountMenuOpen ? <Circle /> : <CircleOutlined />}
+                    </StyledIconButton>
+                    {isAccountMenuOpen && (
+                        <nav className={styles.menu} ref={accountMenuRef}>
+                            {user && (
+                                <Link className={styles.navLink}
+                                    onClick={() => setIsAccountMenuOpen(false)} href='/account'>
+                                    <AccountBoxOutlined /> Account
+                                </Link>
+                            )}
+                            {user ? (
+                                <Link className={styles.navLink}
+                                    href='/'
+                                    onClick={handleLogOut}>
+                                    <LogoutOutlined /> Log Out
+                                </Link>
+                            ) : (
+                                <Link className={styles.navLink}
+                                    href='https://login.machinename.dev/?redirect=/www.machinename.dev'
+                                    onClick={() => setIsAccountMenuOpen(false)}>
+                                    <LoginOutlined /> Log In
+                                </Link>
+                            )}
+                        </nav>
+                    )}
                 </div>
-            </header>
+            </div>
+        </header>
     );
 }
