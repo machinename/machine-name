@@ -52,7 +52,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             return;
         }
         const fetchUser = async () => {
-            const response = await axios.get('https://auth.machinename.dev/verify', {
+            const response = await axios.post('https://auth.machinename.dev/verify', {
                 withCredentials: true
             });
             console.log(response.data);
