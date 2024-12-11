@@ -25,7 +25,7 @@ import {
 } from "firebase/auth";
 import { auth } from '../firebase';
 import axios from 'axios';
-// import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 
 interface AuthContextType {
     authError: string;
@@ -56,19 +56,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 withCredentials: true
             });
             console.log(response.data);
-            // setIsAuthLoading(true);
-            // try {
-            //     const token = Cookies.get('MNFBCT');
-            //     if (token) {
-            //         const userCredential = await signInWithCustomToken(auth, token);
-            //         Cookies.remove('MNFBCT');
-            //         setUser(userCredential.user);
-            //     }
-            // } catch (err) {
-            //     setAuthError('Session expired or invalid.');
-            // } finally {
-            //     setIsAuthLoading(false);
-            // }
+            setIsAuthLoading(true);
+            try {
+                const token = Cookies.get('SNMNCT');
+                if (token) {
+                    // const userCredential = await signInWithCustomToken(auth, token);
+                    Cookies.remove('SNMNCT');
+                    // setUser(userCredential.user);
+                }
+            } catch (err) {
+                setAuthError('Session expired or invalid.');
+            } finally {
+                setIsAuthLoading(false);
+            }
         };
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setIsAuthLoading(true);
