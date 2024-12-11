@@ -111,7 +111,7 @@ export default function Header() {
                                 {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
                             </Link>
                             <Link className={pathname === '/projects' ? styles.navLinkActive : styles.navLink} href='/projects'>
-                                {pathname === '/dashboard' ? <AccountTree /> : <AccountTreeOutlined />}Dashboard
+                                {pathname === '/projects' ? <AccountTree /> : <AccountTreeOutlined />}Projects
                             </Link>        
                             <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
                                 {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />}Help
