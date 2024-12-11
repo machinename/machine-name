@@ -70,7 +70,6 @@ export default function Header() {
             //     }
             // }
         };
-
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
@@ -96,7 +95,6 @@ export default function Header() {
 
     return (
         <header className={isScrolled ? styles.headerScrolled : styles.header}>
-            {/* Nav Leading */}
             <div className={styles.headerLeading}>
                 <div className={styles.navAnchor}>
                     <StyledIconButton ref={navButtonRef}
@@ -120,7 +118,6 @@ export default function Header() {
                     <Link href='/'>MACHINENAME.DEV</Link>
                 </div>
             </div>
-            {/* Nav Trailing */}
             <div className={styles.headerTrailing}>
                 {
                     isAuthLoading && (
