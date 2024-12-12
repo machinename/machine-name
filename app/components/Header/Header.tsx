@@ -62,10 +62,6 @@ export default function Header() {
                 return 'MACHINENAME.DEV';
             case '/dashboard':
                 return 'Dashboard';
-            case '/help':
-                return 'Help';
-            case '/projects':
-                return 'Projects';
             default:
                 return 'MACHINENAME.DEV';
         };
