@@ -8,7 +8,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Machine Name",
   description: "Welcome to Machine Name",
-  keywords: "innovation, showcase, open source, projects, technology, creative solutions",
+  keywords: "machine learning, innovation, showcase, open source, projects, technology, creative solutions",
   authors: [
     { name: "Machine Name" }
   ],
