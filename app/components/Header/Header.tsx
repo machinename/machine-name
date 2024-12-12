@@ -12,8 +12,6 @@ import {
     MenuOpen,
     Dashboard,
     DashboardOutlined,
-    HelpCenter,
-    HelpCenterOutlined,
     Home,
     HomeOutlined,
     AccountTreeOutlined,
@@ -62,6 +60,8 @@ export default function Header() {
                 return 'MACHINENAME.DEV';
             case '/dashboard':
                 return 'Dashboard';
+            case '/projects':
+                return 'Projects';
             default:
                 return 'MACHINENAME.DEV';
         };
@@ -126,9 +126,6 @@ export default function Header() {
                             <Link className={pathname === '/projects' ? styles.navLinkActive : styles.navLink} href='/projects'>
                                 {pathname === '/projects' ? <AccountTree /> : <AccountTreeOutlined />}Projects
                             </Link>    
-                            <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
-                                {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />}Help
-                            </Link>
                         </nav>
                     )}
                 </div>
