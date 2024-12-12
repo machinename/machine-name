@@ -14,8 +14,10 @@ import {
     DashboardOutlined,
     HelpCenter,
     HelpCenterOutlined,
-    AccountTree,
+    Home,
+    HomeOutlined,
     AccountTreeOutlined,
+    AccountTree,
     // Settings,
     // SettingsOutlined
 } from '@mui/icons-material';
@@ -54,6 +56,21 @@ export default function Header() {
         }
     };
 
+    const getTitle = () => {
+        switch (pathname) {
+            case '/':
+                return 'MACHINENAME.DEV';
+            case '/dashboard':
+                return 'Dashboard';
+            case '/help':
+                return 'Help';
+            case '/projects':
+                return 'Projects';
+            default:
+                return 'MACHINENAME.DEV';
+        };
+    };
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (navMenuRef.current && !navMenuRef.current.contains(event.target as Node)) {
@@ -77,7 +94,6 @@ export default function Header() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [accountButtonRef, accountMenuRef, navButtonRef, navMenuRef, settingsButtonRef, settingsMenuRef]);
-
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 0) {
@@ -88,7 +104,6 @@ export default function Header() {
                 // document.body.classList.add('hide-scrollbar');
             }
         };
-
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -100,19 +115,21 @@ export default function Header() {
             <div className={styles.headerLeading}>
                 <div className={styles.navAnchor}>
                     <StyledIconButton ref={navButtonRef}
-
                         disableTouchRipple={true}
                         onClick={() => setIsNavMenuOpen(prev => !prev)}>
                         {isNavMenuOpen ? <Close /> : <MenuOpen />}
                     </StyledIconButton>
                     {isNavMenuOpen && (
                         <nav className={styles.menu} ref={navMenuRef}>
+                            <Link className={pathname === '/' ? styles.navLinkActive : styles.navLink} href='/'>
+                                {pathname === '/' ? <Home /> : <HomeOutlined />}Home
+                            </Link>
                             <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
                                 {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
-                            </Link>
+                            </Link> 
                             <Link className={pathname === '/projects' ? styles.navLinkActive : styles.navLink} href='/projects'>
                                 {pathname === '/projects' ? <AccountTree /> : <AccountTreeOutlined />}Projects
-                            </Link>        
+                            </Link>    
                             <Link className={pathname === '/help' ? styles.navLinkActive : styles.navLink} href='/help'>
                                 {pathname === '/help' ? <HelpCenter /> : <HelpCenterOutlined />}Help
                             </Link>
@@ -120,7 +137,7 @@ export default function Header() {
                     )}
                 </div>
                 <div className={styles.headerTitle}>
-                    <Link href='/'>MACHINENAME.DEV</Link>
+                    <p>{getTitle()}</p>
                 </div>
             </div>
             <div className={styles.headerTrailing}>

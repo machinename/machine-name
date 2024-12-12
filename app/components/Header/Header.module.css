@@ -41,11 +41,11 @@
     width: 200px;
 }
 
-.headerTitle a {
+.headerTitle p {
     color: gray;
     font-size: x-large;
     font-weight: lighter;
-    text-decoration: none;
+    cursor: default;
 }
 
 .accountAnchor,
@@ -65,7 +65,6 @@
     justify-content: flex-start;
 }
 
-
 .menu {
     background-color: white;
     display: flex;
@@ -77,7 +76,8 @@
 }
 
 .navLink,
-.navLinkActive {
+.navLinkActive,
+.navLinkOut {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -115,25 +115,6 @@
     box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
 }
 
-.searchInputContainer {
-    background-color: #f4f4f4;
-}
-
-.searchInputContainer:hover {
-    box-shadow: 0 4px 8px rgba(0.2, 0.2, 0.2, 0.2);
-}
-
-.searchInput {
-    background-color: inherit;
-    outline: none;
-    border: none;
-    width: 100%;
-    z-index: 2;
-    font-family: monospace;
-    font-size: normal;
-}
-
-
 @media(prefers-color-scheme: dark) {
     .header,
     .headerScrolled,
@@ -157,8 +138,8 @@
     }
 }
 
-/* @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .headerTitle {
         display: none;
     }
-} */
+}

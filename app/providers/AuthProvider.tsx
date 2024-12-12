@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 
 import {
+    EmailAuthProvider,
     deleteUser,
     onAuthStateChanged,
     reauthenticateWithCredential,
@@ -18,7 +19,6 @@ import {
     sendPasswordResetEmail,
     updateProfile,
     verifyBeforeUpdateEmail,
-    EmailAuthProvider,
     User,
     signInWithCustomToken,
 } from "firebase/auth";
