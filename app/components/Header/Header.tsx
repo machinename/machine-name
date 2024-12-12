@@ -7,7 +7,7 @@ import {
 
 import Link from 'next/link';
 import {
-    AccountBoxOutlined, Circle, CircleOutlined, Close, LoginOutlined,
+    AccountBoxOutlined, Close, LoginOutlined,
     LogoutOutlined,
     MenuOpen,
     Dashboard,
@@ -16,6 +16,7 @@ import {
     HomeOutlined,
     AccountTreeOutlined,
     AccountTree,
+    AccountCircle,
     // Settings,
     // SettingsOutlined
 } from '@mui/icons-material';
@@ -168,7 +169,7 @@ export default function Header() {
                     <StyledIconButton ref={accountButtonRef}
                         disableTouchRipple={true}
                         onClick={() => setIsAccountMenuOpen(prev => !prev)}>
-                        {isAccountMenuOpen ? <Circle /> : <CircleOutlined />}
+                        {isAccountMenuOpen ? <AccountCircle/> : <AccountCircle/>}
                     </StyledIconButton>
                     {isAccountMenuOpen && (
                         <nav className={styles.menu} ref={accountMenuRef}>
