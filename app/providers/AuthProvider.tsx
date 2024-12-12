@@ -44,37 +44,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [user, setUser] = useState<User | null>(null);
     const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (!auth) {
-            setAuthError('Firebase Auth not initialized');
-            return;
-        }
-        const fetchUser = async () => {
-            setIsAuthLoading(true);
-            try {
-                const token = Cookies.get('SNMNCT');
-                if (token && !user) {
-                    const userCredential = await signInWithCustomToken(auth, token);
-                    setUser(userCredential.user);
-                } else if (!token && user) {
-                    await auth.signOut();
-                    setUser(null);
-                }
-            } catch (err) {
-                setAuthError('Session expired or invalid.');
-            } finally {
-                setIsAuthLoading(false);
-            }
-        };
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setIsAuthLoading(true);
-            setUser(currentUser || null);
-            setIsAuthLoading(false);
-        });
-        fetchUser();
-        return () => unsubscribe();
-    }, []);
-
     const deleteUserAccount = useCallback(async (password: string): Promise<void> => {
         try {
             if (user) {
@@ -133,7 +102,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setAuthError('' + error);
             throw error;
         }
-    }, [ user]);
+    }, [user]);
 
     const updateUserEmail = useCallback(async (newEmail: string, password: string): Promise<void> => {
         try {
@@ -148,6 +117,37 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setAuthError('' + error);
             throw error;
         }
+    }, [user]);
+
+    useEffect(() => {
+        if (!auth) {
+            setAuthError('Firebase Auth not initialized');
+            return;
+        }
+        const fetchUser = async () => {
+            setIsAuthLoading(true);
+            try {
+                const token = Cookies.get('SNMNCT');
+                if (token && !user) {
+                    const userCredential = await signInWithCustomToken(auth, token);
+                    setUser(userCredential.user);
+                } else if (!token && user) {
+                    await auth.signOut();
+                    setUser(null);
+                }
+            } catch (err) {
+                setAuthError('Session expired or invalid.');
+            } finally {
+                setIsAuthLoading(false);
+            }
+        };
+        fetchUser();
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setIsAuthLoading(true);
+            setUser(currentUser || null);
+            setIsAuthLoading(false);
+        });
+        return () => unsubscribe();
     }, [user]);
 
     const contextValue = useMemo(() => ({
