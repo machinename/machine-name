@@ -17,6 +17,7 @@ import {
     AccountTreeOutlined,
     AccountTree,
     AccountCircle,
+    GitHub,
     // Settings,
     // SettingsOutlined
 } from '@mui/icons-material';
@@ -123,10 +124,10 @@ export default function Header() {
                             </Link>
                             <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
                                 {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
-                            </Link> 
+                            </Link>
                             <Link className={pathname === '/projects' ? styles.navLinkActive : styles.navLink} href='/projects'>
                                 {pathname === '/projects' ? <AccountTree /> : <AccountTreeOutlined />}Projects
-                            </Link>    
+                            </Link>
                         </nav>
                     )}
                 </div>
@@ -166,10 +167,21 @@ export default function Header() {
                         )}
                     </div> */}
                 <div className={styles.accountAnchor}>
+                    <Link
+                        href='https://github.com/machinename/'
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <StyledIconButton
+                            disableTouchRipple={true}
+                        >
+                            <GitHub />
+                        </StyledIconButton>
+                    </Link>
                     <StyledIconButton ref={accountButtonRef}
                         disableTouchRipple={true}
                         onClick={() => setIsAccountMenuOpen(prev => !prev)}>
-                        {isAccountMenuOpen ? <AccountCircle/> : <AccountCircle/>}
+                        {isAccountMenuOpen ? <AccountCircle /> : <AccountCircle />}
                     </StyledIconButton>
                     {isAccountMenuOpen && (
                         <nav className={styles.menu} ref={accountMenuRef}>
