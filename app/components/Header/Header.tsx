@@ -92,14 +92,13 @@ export default function Header() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [accountButtonRef, accountMenuRef, navButtonRef, navMenuRef, settingsButtonRef, settingsMenuRef]);
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 0) {
                 setIsScrolled(true);
-                // document.body.classList.remove('hide-scrollbar');
             } else {
                 setIsScrolled(false);
-                // document.body.classList.add('hide-scrollbar');
             }
         };
         window.addEventListener('scroll', handleScroll);
@@ -172,9 +171,7 @@ export default function Header() {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <StyledIconButton
-                            disableTouchRipple={true}
-                        >
+                        <StyledIconButton disableTouchRipple={true}>
                             <GitHub />
                         </StyledIconButton>
                     </Link>
@@ -210,4 +207,4 @@ export default function Header() {
             </div>
         </header>
     );
-}
+};
