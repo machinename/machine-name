@@ -4,7 +4,7 @@
     position: fixed;
     display: flex;
     flex-direction: row;
-    height: 4rem;
+    height: 3rem;
     width: 100%;
     align-items: center;
     justify-content: space-between;
@@ -41,11 +41,17 @@
     width: 200px;
 }
 
-.headerTitle p {
+.headerTitle a {
     color: gray;
     font-size: x-large;
     font-weight: lighter;
-    cursor: default;
+    text-decoration: none;
+}
+
+.projectContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .accountAnchor,

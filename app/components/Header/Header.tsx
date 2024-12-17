@@ -17,14 +17,21 @@ import {
     AccountTreeOutlined,
     AccountTree,
     AccountCircle,
-    GitHub,
     // Settings,
     // SettingsOutlined
 } from '@mui/icons-material';
 
+interface Project {
+    id: string;
+    name: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 import { useAuthContext } from '../../providers/AuthProvider';
 import styles from "./Header.module.css";
-import { StyledIconButton } from '../Styled';
+import { StyledButtonHeader, StyledIconButton} from '../Styled';
 import { CircularProgress } from '@mui/material';
 
 export default function Header() {
@@ -37,6 +44,30 @@ export default function Header() {
     const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
     // const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [project, setProject] = useState(null as Project | null);
+    const [projects, setProjects] = useState<Project[]>([
+        {
+            id: '1',
+            name: 'Project One',
+            description: 'Description for project one',
+            createdAt: '2023-01-01',
+            updatedAt: '2023-01-02'
+        },
+        {
+            id: '2',
+            name: 'Project Two',
+            description: 'Description for project two',
+            createdAt: '2023-02-01',
+            updatedAt: '2023-02-02'
+        },
+        {
+            id: '3',
+            name: 'Project Three',
+            description: 'Description for project three',
+            createdAt: '2023-03-01',
+            updatedAt: '2023-03-02'
+        }
+    ]);
 
     const pathname = usePathname();
 
@@ -54,19 +85,6 @@ export default function Header() {
         } catch (error) {
             console.log(error);
         }
-    };
-
-    const getTitle = () => {
-        switch (pathname) {
-            case '/':
-                return 'MACHINENAME.DEV';
-            case '/dashboard':
-                return 'Dashboard';
-            case '/projects':
-                return 'Projects';
-            default:
-                return 'MACHINENAME.DEV';
-        };
     };
 
     useEffect(() => {
@@ -107,6 +125,10 @@ export default function Header() {
         };
     }, []);
 
+    if (pathname === '/login') {
+        return null;
+    };
+
     return (
         <header className={isScrolled ? styles.headerScrolled : styles.header}>
             <div className={styles.headerLeading}>
@@ -124,14 +146,17 @@ export default function Header() {
                             <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
                                 {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
                             </Link>
-                            <Link className={pathname === '/projects' ? styles.navLinkActive : styles.navLink} href='/projects'>
-                                {pathname === '/projects' ? <AccountTree /> : <AccountTreeOutlined />}Projects
-                            </Link>
                         </nav>
                     )}
                 </div>
                 <div className={styles.headerTitle}>
-                    <p>{getTitle()}</p>
+                    <Link href={"/"}>MACHINENAME.DEV</Link>
+                </div>
+                <div className={styles.projectContainer}>
+                    <StyledButtonHeader variant='contained'
+                    startIcon={<AccountTreeOutlined />}>
+                        {project ? project.name : 'Project...'}
+                    </StyledButtonHeader>
                 </div>
             </div>
             <div className={styles.headerTrailing}>
@@ -166,15 +191,6 @@ export default function Header() {
                         )}
                     </div> */}
                 <div className={styles.accountAnchor}>
-                    <Link
-                        href='https://github.com/machinename/'
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <StyledIconButton disableTouchRipple={true}>
-                            <GitHub />
-                        </StyledIconButton>
-                    </Link>
                     <StyledIconButton ref={accountButtonRef}
                         disableTouchRipple={true}
                         onClick={() => setIsAccountMenuOpen(prev => !prev)}>
@@ -196,7 +212,7 @@ export default function Header() {
                                 </Link>
                             ) : (
                                 <Link className={styles.navLink}
-                                    href='https://login.machinename.dev/?redirect=www.machinename.dev'
+                                    href='/login'
                                     onClick={() => setIsAccountMenuOpen(false)}>
                                     <LoginOutlined /> Log In
                                 </Link>

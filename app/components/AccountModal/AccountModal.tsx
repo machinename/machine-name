@@ -56,9 +56,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setErrors({ displayName: '', email: '', password: '' });
-
         try {
-            console.log(screen);
             switch (screen) {
                 case "email":
                     if (email === user?.email) {
@@ -94,7 +92,6 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                     clearValues();
                     setInfo('Display name updated successfully');
                     break;
-
                 case "verification":
                     if (email !== user?.email) {
                         setErrors({ ...errors, email: 'Email is not the same as current email' });
@@ -104,7 +101,6 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose, screen }) 
                     clearValues();
                     setInfo('Please verify your new email address');
                     break;
-
                 default:
                     console.error('Unknown screen:', screen);
             }
