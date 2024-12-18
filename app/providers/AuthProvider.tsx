@@ -136,7 +136,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 withCredentials: true,
             });
             setUser(null);
-            console.log('Auth User - ' + user);
+            console.log('Auth User - ' + auth.currentUser);
         } catch (error) {
             setAuthError('' + error);
             throw error;
