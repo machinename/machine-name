@@ -216,7 +216,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             }
         };
         fetchUser();
-    }, [user]);
+    }, []);
 
     useEffect(() => {
         if (!auth) {
