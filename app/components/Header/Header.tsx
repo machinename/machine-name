@@ -15,19 +15,19 @@ import {
     Home,
     HomeOutlined,
     AccountTreeOutlined,
-    AccountTree,
+    // AccountTree,
     AccountCircle,
     // Settings,
     // SettingsOutlined
 } from '@mui/icons-material';
 
-interface Project {
-    id: string;
-    name: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-}
+// interface Project {
+//     id: string;
+//     name: string;
+//     description: string;
+//     createdAt: string;
+//     updatedAt: string;
+// }
 
 import { useAuthContext } from '../../providers/AuthProvider';
 import styles from "./Header.module.css";
@@ -44,30 +44,30 @@ export default function Header() {
     const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
     // const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const [project, setProject] = useState(null as Project | null);
-    const [projects, setProjects] = useState<Project[]>([
-        {
-            id: '1',
-            name: 'Project One',
-            description: 'Description for project one',
-            createdAt: '2023-01-01',
-            updatedAt: '2023-01-02'
-        },
-        {
-            id: '2',
-            name: 'Project Two',
-            description: 'Description for project two',
-            createdAt: '2023-02-01',
-            updatedAt: '2023-02-02'
-        },
-        {
-            id: '3',
-            name: 'Project Three',
-            description: 'Description for project three',
-            createdAt: '2023-03-01',
-            updatedAt: '2023-03-02'
-        }
-    ]);
+    // const [project, setProject] = useState(null as Project | null);
+    // const [projects, setProjects] = useState<Project[]>([
+    //     {
+    //         id: '1',
+    //         name: 'Project One',
+    //         description: 'Description for project one',
+    //         createdAt: '2023-01-01',
+    //         updatedAt: '2023-01-02'
+    //     },
+    //     {
+    //         id: '2',
+    //         name: 'Project Two',
+    //         description: 'Description for project two',
+    //         createdAt: '2023-02-01',
+    //         updatedAt: '2023-02-02'
+    //     },
+    //     {
+    //         id: '3',
+    //         name: 'Project Three',
+    //         description: 'Description for project three',
+    //         createdAt: '2023-03-01',
+    //         updatedAt: '2023-03-02'
+    //     }
+    // ]);
 
     const pathname = usePathname();
 
@@ -155,7 +155,8 @@ export default function Header() {
                 <div className={styles.projectContainer}>
                     <StyledButtonHeader variant='contained'
                     startIcon={<AccountTreeOutlined />}>
-                        {project ? project.name : 'Project...'}
+                        {'Project...'}
+                        {/* {project ? project.name : 'Project...'} */}
                     </StyledButtonHeader>
                 </div>
             </div>

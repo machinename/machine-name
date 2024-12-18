@@ -79,9 +79,6 @@ export const StyledButtonHeader = styled(Button)({
     color: 'gray',
     fontFamily: 'inherit',
     fontWeight: defaultFontWeight,
-    // '@media (prefers-color-scheme: dark)': {
-    //     color: '#ededed',
-    // }
 });
 
 export const StyledIconButton = styled(IconButton)({

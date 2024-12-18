@@ -205,7 +205,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 //     await auth.signOut();
                 //     setUser(null);
                 // }
-                
+                const response = await axios.get('https://machinename.dev/verfiy', {
+                    withCredentials: true,
+                });
+                setUser(response.data);
             } catch (err) {
                 setAuthError('Session expired or invalid.');
             } finally {
