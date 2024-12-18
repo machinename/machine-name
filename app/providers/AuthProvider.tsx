@@ -76,7 +76,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                     setAuthError('Unknown FirebaseError, error.code: ' + error.code);
             }
         } else {
-            setAuthError('' + error);
+            setAuthError('Error: ' + error);
         }
     }, []);
 
@@ -205,7 +205,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 //     await auth.signOut();
                 //     setUser(null);
                 // }
-                const response = await axios.get('https://machinename.dev/verfiy', {
+                const response = await axios.get('https://api.machinename.dev/verfiy', {
                     withCredentials: true,
                 });
                 setUser(response.data);
