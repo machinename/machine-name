@@ -213,7 +213,7 @@ export default function Header() {
                                 </Link>
                             ) : (
                                 <Link className={styles.navLink}
-                                    href='/login'
+                                    href='https://login.machinename.dev/redirect_uri=https://www.machinename.dev'
                                     onClick={() => setIsAccountMenuOpen(false)}>
                                     <LoginOutlined /> Log In
                                 </Link>
