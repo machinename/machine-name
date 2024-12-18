@@ -209,7 +209,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                     withCredentials: true,
                 });
                 setUser(response.data);
-                console.log('Auth User After Fetch- ' + auth.currentUser);
+                console.log('Auth User After Fetch - ' + auth.currentUser);
             } catch (err) {
                 setAuthError('Session expired or invalid.');
             } finally {
