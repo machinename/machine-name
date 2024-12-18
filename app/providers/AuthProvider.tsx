@@ -131,8 +131,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const logOut = useCallback(async (): Promise<void> => {
         try {
-            await auth.signOut();
+            // await auth.signOut();
+            await axios.get('https://api.machinename.dev/logout', {
+                withCredentials: true,
+            });
             setUser(null);
+            console.log('Auth User - ' + user);
         } catch (error) {
             setAuthError('' + error);
             throw error;
