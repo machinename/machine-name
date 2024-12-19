@@ -208,12 +208,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 const response = await axios.get('https://api.machinename.dev/verify', {
                     withCredentials: true,
                 });
+                console.log('Response Data - ' + response.data);
                 setUser(response.data);
-                console.log('Auth User After Fetch - ' + auth.currentUser);
-            } catch (err) {
+            } catch {
                 setAuthError('Session expired or invalid.');
             } finally {
                 setIsAuthLoading(false);
+                console.log('Auth User After Fetch - ' + auth.currentUser);
             }
         };
         fetchUser();
