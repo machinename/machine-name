@@ -205,7 +205,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 //     await auth.signOut();
                 //     setUser(null);
                 // }
-                const response = await axios.get('https://api.machinename.dev/verfiy', {
+                const response = await axios.get('https://api.machinename.dev/verify', {
                     withCredentials: true,
                 });
                 setUser(response.data);
