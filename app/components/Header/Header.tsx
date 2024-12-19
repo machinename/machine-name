@@ -201,7 +201,10 @@ export default function Header() {
                         <nav className={styles.menu} ref={accountMenuRef}>
                             {user && (
                                 <Link className={styles.navLink}
-                                    onClick={() => setIsAccountMenuOpen(false)} href='/account'>
+                                    onClick={() => setIsAccountMenuOpen(false)} 
+                                    // href='/account'
+                                    href='/'
+                                    >
                                     <AccountBoxOutlined /> Account
                                 </Link>
                             )}
