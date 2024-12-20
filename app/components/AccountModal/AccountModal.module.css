@@ -1,0 +1,102 @@
+.modal {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    min-height: 600px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    z-index: 5;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    background-color: #f9fafb;
+    border-radius: 0px;
+}
+
+
+.header,
+.footer {
+    width: 100%;
+    background-color: inherit;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    height: 3rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer {
+    border-top: 0.5px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.headerContainerTrailing {
+    padding-right: 0.5rem;
+}
+
+.headerContainerLeading {
+    padding-left: 0.5rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    gap: 1rem;
+}
+
+.containerItem,
+.containerItemBtn  {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.containerItemBtn h3 {
+    font-weight: 300;
+}
+
+.containerItemBtn {
+    cursor: pointer;
+}
+
+.containerItemBtn:hover {
+   text-decoration: underline;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+    .wrapper {
+        background-color: #0a0a0a;
+    }
+}

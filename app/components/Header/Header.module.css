@@ -75,7 +75,7 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    top: 4.5rem;
+    top: 3.5rem;
     position: fixed;
     z-index: 5;
     box-shadow: 0 2px 2px rgba(0.1, 0.1, 0.1, 0.1);
