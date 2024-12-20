@@ -25,7 +25,7 @@ import {
     User,
     verifyBeforeUpdateEmail,
 } from "firebase/auth";
-// import axios from 'axios';
+import axios from 'axios';
 import { FirebaseError } from '@firebase/util';
 import { auth } from '../firebase';
 
@@ -188,37 +188,37 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, [user]);
 
-    // useEffect(() => {
-    //     if (!auth) {
-    //         setAuthError('Firebase Auth not initialized');
-    //         return;
-    //     }
-    //     const fetchUser = async () => {
-    //         setIsAuthLoading(true);
-    //         console.log('Auth User Before Fetch - ' + auth.currentUser);
-    //         try {
-    //             // const token = Cookies.get('SNMNCT');
-    //             // if (token && !user) {
-    //             //     const userCredential = await signInWithCustomToken(auth, token);
-    //             //     setUser(userCredential.user);
-    //             // } else if (!token && user) {
-    //             //     await auth.signOut();
-    //             //     setUser(null);
-    //             // }
-    //             const response = await axios.get('https://api.machinename.dev/verify', {
-    //                 withCredentials: true,
-    //             });
-    //             console.log('Response Data - ' + response.data);
-    //             setUser(response.data);
-    //         } catch {
-    //             setAuthError('Session expired or invalid.');
-    //         } finally {
-    //             setIsAuthLoading(false);
-    //             console.log('Auth User After Fetch - ' + auth.currentUser);
-    //         }
-    //     };
-    //     fetchUser();
-    // }, []);
+    useEffect(() => {
+        if (!auth) {
+            setAuthError('Firebase Auth not initialized');
+            return;
+        }
+        const fetchUser = async () => {
+            setIsAuthLoading(true);
+            console.log('Auth User Before Fetch - ' + auth.currentUser);
+            try {
+                // const token = Cookies.get('SNMNCT');
+                // if (token && !user) {
+                //     const userCredential = await signInWithCustomToken(auth, token);
+                //     setUser(userCredential.user);
+                // } else if (!token && user) {
+                //     await auth.signOut();
+                //     setUser(null);
+                // }
+                const response = await axios.get('https://api.machinename.dev/verify', {
+                    withCredentials: true,
+                });
+                console.log('Response Data - ' + response.data);
+                setUser(response.data);
+            } catch {
+                setAuthError('Session expired or invalid.');
+            } finally {
+                setIsAuthLoading(false);
+                console.log('Auth User After Fetch - ' + auth.currentUser);
+            }
+        };
+        fetchUser();
+    }, []);
 
     useEffect(() => {
         if (!auth) {
