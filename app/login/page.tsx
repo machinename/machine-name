@@ -13,7 +13,7 @@ import {
     VisibilityOffOutlined,
     VisibilityOutlined,
 } from '@mui/icons-material';
-import styles from './page.module.css';
+import styles from '../page.module.css';
 import { FormTextField, StyledButton, StyledTextButton } from '../components/Styled';
 import React from 'react';
 import { useAuthContext } from '../providers/AuthProvider';
