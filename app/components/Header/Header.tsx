@@ -207,15 +207,13 @@ export default function Header() {
                         </StyledIconButton>
                         {isAccountMenuOpen && (
                             <nav className={styles.menu} ref={accountMenuRef}>
-                                {!user && (
+                                {user && (
                                     <div className={styles.navLink}
-                                        onClick={handleAccountClick}
-                                        // href='/account'
-                                    >
+                                        onClick={handleAccountClick}>
                                         <AccountBoxOutlined /> Account
                                     </div>
                                 )}
-                                {!user ? (
+                                {user ? (
                                     <Link className={styles.navLink}
                                         href='/'
                                         onClick={handleLogOut}>
@@ -223,7 +221,7 @@ export default function Header() {
                                     </Link>
                                 ) : (
                                     <Link className={styles.navLink}
-                                        href='https://login.machinename.dev/redirect_uri=https://www.machinename.dev'
+                                        href='https://login.machinename.dev'
                                         onClick={() => setIsAccountMenuOpen(false)}>
                                         <LoginOutlined /> Log In
                                     </Link>
