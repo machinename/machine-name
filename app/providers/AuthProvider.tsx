@@ -10,33 +10,33 @@ import React, {
     ReactNode,
 } from 'react';
 import {
-    // createUserWithEmailAndPassword,
+    createUserWithEmailAndPassword,
     deleteUser,
     EmailAuthProvider,
-    // GoogleAuthProvider,
+    GoogleAuthProvider,
     onAuthStateChanged,
     reauthenticateWithCredential,
     sendEmailVerification,
     sendPasswordResetEmail,
     // signInWithCustomToken,
-    // signInWithEmailAndPassword,
-    // signInWithPopup,
+    signInWithEmailAndPassword,
+    signInWithPopup,
     updateProfile,
     User,
     verifyBeforeUpdateEmail,
 } from "firebase/auth";
-import axios from 'axios';
-// import { FirebaseError } from '@firebase/util';
+// import axios from 'axios';
+import { FirebaseError } from '@firebase/util';
 import { auth } from '../firebase';
 
 interface AuthContextType {
     authError: string;
     isAuthLoading: boolean;
     user: User | null;
-    // createUserAccount: (email: string, password: string) => Promise<void>;
+    createUserAccount: (email: string, password: string) => Promise<void>;
     deleteUserAccount: (password: string) => Promise<void>;
-    // logIn: (email: string, password: string) => Promise<void>;
-    // logInWithGoogle: () => Promise<void>;
+    logIn: (email: string, password: string) => Promise<void>;
+    logInWithGoogle: () => Promise<void>;
     logOut: () => Promise<void>;
     sendPasswordReset: (email: string) => Promise<void>;
     sendUserVerification: () => Promise<void>;
@@ -51,46 +51,46 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
     const [user, setUser] = useState<User | null>(null);
 
-    // const handleError = useCallback((error: unknown) => {
-    //     if (error instanceof FirebaseError) {
-    //         switch (error.code) {
-    //             case 'auth/invalid-credential':
-    //                 setAuthError('Invalid credentials provided');
-    //                 break;
-    //             case 'auth/email-already-in-use':
-    //                 setAuthError('Email already in use');
-    //                 break;
-    //             case 'auth/invalid-email':
-    //                 setAuthError('Invalid email address');
-    //                 break;
-    //             case 'auth/operation-not-allowed':
-    //                 setAuthError('Operation not allowed');
-    //                 break;
-    //             case 'auth/weak-password':
-    //                 setAuthError('The password is too weak');
-    //                 break;
-    //             case 'auth/too-many-requests':
-    //                 setAuthError('Access temporarily disabled due to many failed attempts');
-    //                 break;
-    //             default:
-    //                 setAuthError('Unknown FirebaseError, error.code: ' + error.code);
-    //         }
-    //     } else {
-    //         setAuthError('Error: ' + error);
-    //     }
-    // }, []);
+    const handleError = useCallback((error: unknown) => {
+        if (error instanceof FirebaseError) {
+            switch (error.code) {
+                case 'auth/invalid-credential':
+                    setAuthError('Invalid credentials provided');
+                    break;
+                case 'auth/email-already-in-use':
+                    setAuthError('Email already in use');
+                    break;
+                case 'auth/invalid-email':
+                    setAuthError('Invalid email address');
+                    break;
+                case 'auth/operation-not-allowed':
+                    setAuthError('Operation not allowed');
+                    break;
+                case 'auth/weak-password':
+                    setAuthError('The password is too weak');
+                    break;
+                case 'auth/too-many-requests':
+                    setAuthError('Access temporarily disabled due to many failed attempts');
+                    break;
+                default:
+                    setAuthError('Unknown FirebaseError, error.code: ' + error.code);
+            }
+        } else {
+            setAuthError('Error: ' + error);
+        }
+    }, []);
 
-    // const createUserAccount = useCallback(async (email: string, password: string): Promise<void> => {
-    //     setIsAuthLoading(true);
-    //     try {
-    //         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    //         await sendEmailVerification(userCredential.user);
-    //     } catch (error) {
-    //         handleError(error);
-    //     } finally {
-    //         setIsAuthLoading(false);
-    //     }
-    // }, [handleError]);
+    const createUserAccount = useCallback(async (email: string, password: string): Promise<void> => {
+        setIsAuthLoading(true);
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await sendEmailVerification(userCredential.user);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsAuthLoading(false);
+        }
+    }, [handleError]);
 
     const deleteUserAccount = useCallback(async (password: string): Promise<void> => {
         try {
@@ -106,36 +106,36 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, [user]);
 
-    // const logIn = useCallback(async (email: string, password: string): Promise<void> => {
-    //     setIsAuthLoading(true);
-    //     try {
-    //         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    //         setUser(userCredential.user);
-    //     } catch (error) {
-    //         handleError(error);
-    //     } finally {
-    //         setIsAuthLoading(false);
-    //     }
-    // }, [handleError]);
+    const logIn = useCallback(async (email: string, password: string): Promise<void> => {
+        setIsAuthLoading(true);
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            setUser(userCredential.user);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsAuthLoading(false);
+        }
+    }, [handleError]);
 
-    // const logInWithGoogle = useCallback(async (): Promise<void> => {
-    //     try {
-    //         const userCredential = await signInWithPopup(auth, new GoogleAuthProvider());
-    //         setUser(userCredential.user);
-    //     } catch (error) {
-    //         handleError(error);
-    //     } finally {
-    //         setIsAuthLoading(false);
-    //     }
-    // }, [handleError]);
+    const logInWithGoogle = useCallback(async (): Promise<void> => {
+        try {
+            const userCredential = await signInWithPopup(auth, new GoogleAuthProvider());
+            setUser(userCredential.user);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsAuthLoading(false);
+        }
+    }, [handleError]);
 
     const logOut = useCallback(async (): Promise<void> => {
         console.log('Before Log Out - Auth User - ' + auth.currentUser);
         try {
-            // await auth.signOut();
-            await axios.get('https://api.machinename.dev/logout', {
-                withCredentials: true,
-            });
+            await auth.signOut();
+            // await axios.get('https://api.machinename.dev/logout', {
+            //     withCredentials: true,
+            // });
             setUser(null);
             console.log('After Log Out - Auth User - ' + auth.currentUser);
         } catch (error) {
@@ -188,37 +188,37 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, [user]);
 
-    useEffect(() => {
-        if (!auth) {
-            setAuthError('Firebase Auth not initialized');
-            return;
-        }
-        const fetchUser = async () => {
-            setIsAuthLoading(true);
-            console.log('Auth User Before Fetch - ' + auth.currentUser);
-            try {
-                // const token = Cookies.get('SNMNCT');
-                // if (token && !user) {
-                //     const userCredential = await signInWithCustomToken(auth, token);
-                //     setUser(userCredential.user);
-                // } else if (!token && user) {
-                //     await auth.signOut();
-                //     setUser(null);
-                // }
-                const response = await axios.get('https://api.machinename.dev/verify', {
-                    withCredentials: true,
-                });
-                console.log('Response Data - ' + response.data);
-                setUser(response.data);
-            } catch {
-                setAuthError('Session expired or invalid.');
-            } finally {
-                setIsAuthLoading(false);
-                console.log('Auth User After Fetch - ' + auth.currentUser);
-            }
-        };
-        fetchUser();
-    }, []);
+    // useEffect(() => {
+    //     if (!auth) {
+    //         setAuthError('Firebase Auth not initialized');
+    //         return;
+    //     }
+    //     const fetchUser = async () => {
+    //         setIsAuthLoading(true);
+    //         console.log('Auth User Before Fetch - ' + auth.currentUser);
+    //         try {
+    //             // const token = Cookies.get('SNMNCT');
+    //             // if (token && !user) {
+    //             //     const userCredential = await signInWithCustomToken(auth, token);
+    //             //     setUser(userCredential.user);
+    //             // } else if (!token && user) {
+    //             //     await auth.signOut();
+    //             //     setUser(null);
+    //             // }
+    //             const response = await axios.get('https://api.machinename.dev/verify', {
+    //                 withCredentials: true,
+    //             });
+    //             console.log('Response Data - ' + response.data);
+    //             setUser(response.data);
+    //         } catch {
+    //             setAuthError('Session expired or invalid.');
+    //         } finally {
+    //             setIsAuthLoading(false);
+    //             console.log('Auth User After Fetch - ' + auth.currentUser);
+    //         }
+    //     };
+    //     fetchUser();
+    // }, []);
 
     useEffect(() => {
         if (!auth) {
@@ -238,10 +238,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         authError,
         isAuthLoading,
         user,
-        // createUserAccount,
+        createUserAccount,
         deleteUserAccount,
-        // logIn,
-        // logInWithGoogle,
+        logIn,
+        logInWithGoogle,
         logOut,
         sendPasswordReset,
         sendUserVerification,
@@ -251,10 +251,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         authError,
         isAuthLoading,
         user,
-        // createUserAccount,
+        createUserAccount,
         deleteUserAccount,
-        // logIn,
-        // logInWithGoogle,
+        logIn,
+        logInWithGoogle,
         logOut,
         sendPasswordReset,
         sendUserVerification,

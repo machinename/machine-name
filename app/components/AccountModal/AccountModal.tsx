@@ -191,7 +191,6 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen,
         isOpen && (
             <div className={styles.modal}>
                 <Paper className={styles.wrapper}>
-
                     <div className={styles.header}>
                         <div className={styles.headerContainerLeading}>
                             <h1>Account</h1>
