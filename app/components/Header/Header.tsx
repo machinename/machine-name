@@ -106,11 +106,6 @@ export default function Header() {
                     setIsAccountMenuOpen(false);
                 }
             }
-            // if (settingsMenuRef.current && !settingsMenuRef.current.contains(event.target as Node)) {
-            //     if (!settingsButtonRef.current?.contains(event.target as Node)) {
-            //         setIsSettingsMenuOpen(false);
-            //     }
-            // }
         };
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -176,29 +171,6 @@ export default function Header() {
                             </StyledIconButton>
                         )
                     }
-                    {/* <div className={styles.settingsAnchor}>
-                        <StyledIconButton
-                            ref={settingsButtonRef}
-                            onClick={() => setIsSettingsMenuOpen(prev => !prev)}>
-                            {isSettingsMenuOpen ? <Settings /> : <SettingsOutlined />}
-                        </StyledIconButton>
-                        {isSettingsMenuOpen && (
-                            <nav className={styles.menu} ref={settingsMenuRef}>
-                                <div className={styles.navLink}>
-                                    Todo - Settings Menu
-                                </div>
-                                <div className={styles.navLink}>
-                                    Todo - Project
-                                </div>
-                                <div className={styles.navLink}>
-                                    Todo - Drag Drop Grid
-                                </div>
-                                <div className={styles.navLink}>
-                                    Todo - Too Much
-                                </div>
-                            </nav>
-                        )}
-                    </div> */}
                     <div className={styles.accountAnchor}>
                         <StyledIconButton ref={accountButtonRef}
                             disableTouchRipple={true}
@@ -221,8 +193,7 @@ export default function Header() {
                                     </Link>
                                 ) : (
                                     <Link className={styles.navLink}
-                                        // href='https://login.machinename.dev'
-                                        href={'/login'}
+                                        href='https://login.machinename.dev'
                                         onClick={() => setIsAccountMenuOpen(false)}>
                                         <LoginOutlined /> Log In
                                     </Link>
