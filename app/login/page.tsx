@@ -1,168 +1,168 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation'
-import {
-    InputAdornment,
-    Divider,
-} from '@mui/material';
-import {
-    Google,
-    PersonOutline,
-    VisibilityOffOutlined,
-    VisibilityOutlined,
-} from '@mui/icons-material';
+// import { useState } from 'react';
+// import Link from 'next/link';
+// import { useRouter } from 'next/navigation'
+// import {
+//     InputAdornment,
+//     Divider,
+// } from '@mui/material';
+// import {
+//     Google,
+//     PersonOutline,
+//     VisibilityOffOutlined,
+//     VisibilityOutlined,
+// } from '@mui/icons-material';
 import styles from '../page.module.css';
-import { FormTextField, StyledButton, StyledTextButton } from '../components/Styled';
+// import { FormTextField, StyledButton, StyledTextButton } from '../components/Styled';
 import React from 'react';
-import { useAuthContext } from '../providers/AuthProvider';
-import { useAppContext } from '../providers/AppProvider';
+// import { useAuthContext } from '../providers/AuthProvider';
+// import { useAppContext } from '../providers/AppProvider';
 
 export default function Login() {
-    const { createUserAccount, logIn, logInWithGoogle, sendPasswordReset } = useAuthContext();
-    const { setInfo } = useAppContext();
+    // const { createUserAccount, logIn, logInWithGoogle, sendPasswordReset } = useAuthContext();
+    // const { setInfo } = useAppContext();
 
-    const router = useRouter();
+    // const router = useRouter();
 
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [isHelp, setIsHelp] = useState<boolean>(false);
-    const [isLogin, setIsLogin] = useState<boolean>(true);
+    // const [email, setEmail] = useState<string>('');
+    // const [password, setPassword] = useState<string>('');
+    // const [confirmPassword, setConfirmPassword] = useState<string>('');
+    // const [showPassword, setShowPassword] = useState<boolean>(false);
+    // const [isHelp, setIsHelp] = useState<boolean>(false);
+    // const [isLogin, setIsLogin] = useState<boolean>(true);
 
-    const [errors, setErrors] = useState({
-        email: '',
-        password: '',
-        confirmPassword: '',
-    });
+    // const [errors, setErrors] = useState({
+    //     email: '',
+    //     password: '',
+    //     confirmPassword: '',
+    // });
 
-    const handleClearValues = () => {
-        setEmail('');
-        setPassword('');
-        setConfirmPassword(''); setConfirmPassword('');
-        setErrors({ email: '', password: '', confirmPassword: '' });
-    };
+    // const handleClearValues = () => {
+    //     setEmail('');
+    //     setPassword('');
+    //     setConfirmPassword(''); setConfirmPassword('');
+    //     setErrors({ email: '', password: '', confirmPassword: '' });
+    // };
 
-    const handleCreateAccount = async (email: string, password: string, confirmPassword: string) => {
-        if (!email.trim()) {
-            setErrors({ ...errors, email: 'Email is required' });
-            return;
-        }
-        if (!password.trim()) {
-            setErrors({ ...errors, password: 'Password is required' });
-            return;
-        }
-        if (!confirmPassword.trim()) {
-            setErrors({ ...errors, confirmPassword: 'Confirm Password is required' });
-            return;
-        }
-        if (password !== confirmPassword) {
-            setErrors({ ...errors, confirmPassword: 'Passwords do not match' });
-            return;
-        }
-        await createUserAccount(email, password);
-        // if (sessionCreated) {
-        //     router.push('https://www.machinename.dev');
-        // }
-        router.push('/');
-    };
+    // const handleCreateAccount = async (email: string, password: string, confirmPassword: string) => {
+    //     if (!email.trim()) {
+    //         setErrors({ ...errors, email: 'Email is required' });
+    //         return;
+    //     }
+    //     if (!password.trim()) {
+    //         setErrors({ ...errors, password: 'Password is required' });
+    //         return;
+    //     }
+    //     if (!confirmPassword.trim()) {
+    //         setErrors({ ...errors, confirmPassword: 'Confirm Password is required' });
+    //         return;
+    //     }
+    //     if (password !== confirmPassword) {
+    //         setErrors({ ...errors, confirmPassword: 'Passwords do not match' });
+    //         return;
+    //     }
+    //     await createUserAccount(email, password);
+    //     // if (sessionCreated) {
+    //     //     router.push('https://www.machinename.dev');
+    //     // }
+    //     router.push('/');
+    // };
 
-    const handleContinueAsGuest = async (event: React.FormEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        router.push('/');
-    };
+    // const handleContinueAsGuest = async (event: React.FormEvent<HTMLButtonElement>) => {
+    //     event.preventDefault();
+    //     router.push('/');
+    // };
 
-    const handleContinueWithGoogle = async (event: React.FormEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        try {
-            // let sessionCreated = false;
-            // sessionCreated = await logInWithGoogle();
-            // if (sessionCreated) {
-            //     router.push('https://www.machinename.dev');
-            // } else {
-            //     setInfo('Google login failed. Please try again.');
-            // }
-            await logInWithGoogle();
-            router.push('/');
-        } catch (error) {
-            console.log(error);
-        } finally {
-            handleClearValues();
-        }
-    };
+    // const handleContinueWithGoogle = async (event: React.FormEvent<HTMLButtonElement>) => {
+    //     event.preventDefault();
+    //     try {
+    //         // let sessionCreated = false;
+    //         // sessionCreated = await logInWithGoogle();
+    //         // if (sessionCreated) {
+    //         //     router.push('https://www.machinename.dev');
+    //         // } else {
+    //         //     setInfo('Google login failed. Please try again.');
+    //         // }
+    //         await logInWithGoogle();
+    //         router.push('/');
+    //     } catch (error) {
+    //         console.log(error);
+    //     } finally {
+    //         handleClearValues();
+    //     }
+    // };
 
-    const handleLogIn = async (email: string, password: string) => {
-        if (!password.trim()) {
-            setErrors({ ...errors, password: 'Password is required' });
-            return;
-        }
-        // const sessionCreated = await logIn(email, password);
-        // if (sessionCreated) {
-        //     router.push('https://www.machinename.dev');
-        // }
-        await logIn(email, password);
-        router.push('/');
-    };
+    // const handleLogIn = async (email: string, password: string) => {
+    //     if (!password.trim()) {
+    //         setErrors({ ...errors, password: 'Password is required' });
+    //         return;
+    //     }
+    //     // const sessionCreated = await logIn(email, password);
+    //     // if (sessionCreated) {
+    //     //     router.push('https://www.machinename.dev');
+    //     // }
+    //     await logIn(email, password);
+    //     router.push('/');
+    // };
 
-    const handlePasswordReset = async (email: string) => {
-        if (!email) {
-            setErrors({ ...errors, email: 'Email is required' });
-            return;
-        }
-        await sendPasswordReset(email);
-        setInfo('If the email address is registered, a password reset link will be sent to it.');
-        setEmail('');
-    };
+    // const handlePasswordReset = async (email: string) => {
+    //     if (!email) {
+    //         setErrors({ ...errors, email: 'Email is required' });
+    //         return;
+    //     }
+    //     await sendPasswordReset(email);
+    //     setInfo('If the email address is registered, a password reset link will be sent to it.');
+    //     setEmail('');
+    // };
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setErrors({ email: '', password: '', confirmPassword: '' });
-        try {
-            if (isHelp) {
-                await handlePasswordReset(email);
-            } else if (isLogin) {
-                await handleLogIn(email, password);
-            } else {
-                await handleCreateAccount(email, password, confirmPassword);
-            }
-        } catch (error) {
-            console.log('Error: ', error);
-            setInfo('Error: ' + error);
-        } finally {
-            handleClearValues();
-        }
-    };
+    // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
+    //     setErrors({ email: '', password: '', confirmPassword: '' });
+    //     try {
+    //         if (isHelp) {
+    //             await handlePasswordReset(email);
+    //         } else if (isLogin) {
+    //             await handleLogIn(email, password);
+    //         } else {
+    //             await handleCreateAccount(email, password, confirmPassword);
+    //         }
+    //     } catch (error) {
+    //         console.log('Error: ', error);
+    //         setInfo('Error: ' + error);
+    //     } finally {
+    //         handleClearValues();
+    //     }
+    // };
 
-    const isButtonEnabled = () => {
-        if (isHelp) {
-            return email.trim() !== '';
-        } else if (isLogin) {
-            return email.trim() !== '' && password.trim() !== '' && password.length > 0;
-        } else {
-            return email.trim() !== '' && password.trim() !== '' && confirmPassword.trim() !== '' && password.length > 7;
-        }
-    };
+    // const isButtonEnabled = () => {
+    //     if (isHelp) {
+    //         return email.trim() !== '';
+    //     } else if (isLogin) {
+    //         return email.trim() !== '' && password.trim() !== '' && password.length > 0;
+    //     } else {
+    //         return email.trim() !== '' && password.trim() !== '' && confirmPassword.trim() !== '' && password.length > 7;
+    //     }
+    // };
 
-    const toggleLoginHelp = () => {
-        setIsHelp(prev => !prev);
-        handleClearValues();
-    };
+    // const toggleLoginHelp = () => {
+    //     setIsHelp(prev => !prev);
+    //     handleClearValues();
+    // };
 
-    const toggleShowPassword = () => {
-        setShowPassword(prev => !prev);
-    };
+    // const toggleShowPassword = () => {
+    //     setShowPassword(prev => !prev);
+    // };
 
-    const toggleSwitch = () => {
-        setIsLogin(prev => !prev);
-        setIsHelp(false);
-        handleClearValues();
-    };
+    // const toggleSwitch = () => {
+    //     setIsLogin(prev => !prev);
+    //     setIsHelp(false);
+    //     handleClearValues();
+    // };
 
     return (
         <div className={styles.page}>
-            <div className={styles.switchContainer}>
+            {/* <div className={styles.switchContainer}>
                 <StyledTextButton
                     disableRipple={true}
                     type="button"
@@ -278,7 +278,7 @@ export default function Login() {
                     onClick={toggleLoginHelp}>
                     {isHelp ? 'Back' : 'Log in help'}
                 </StyledTextButton>
-            </div>
+            </div> */}
         </div>
     );
 };
