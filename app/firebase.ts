@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, Auth } from 'firebase/auth';
+// import { getAuth, Auth } from 'firebase/auth';
 import { getFirestore, Firestore } from 'firebase/firestore';
 
 interface FirebaseConfig {
@@ -25,17 +25,17 @@ const firebaseConfig: FirebaseConfig = {
 };
 
 let app;
-let auth: Auth;
+// let auth: Auth;
 let firestore: Firestore;
 
 try {
     // Initialize Firebase
     app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
+    // auth = getAuth(app);
     firestore = getFirestore(app);
     // const analytics = getAnalytics(app);
 } catch (error) {
     console.error("Firebase initialization error:", error);
 }
 
-export { auth, firestore };
+export { firestore };

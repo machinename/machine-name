@@ -19,7 +19,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     const contextValue = useMemo(() => ({
         info, setInfo
     }), [
-        info
+        info, setInfo
     ]);
 
     return (
