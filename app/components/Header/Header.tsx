@@ -29,7 +29,7 @@ import {
 //     updatedAt: string;
 // }
 
-import { useAuthContext } from '../../providers/AuthProvider';
+import { useAppContext } from '../../providers/AppProvider';
 import styles from "./Header.module.css";
 import { StyledButtonHeader, StyledIconButton } from '../Styled';
 import { CircularProgress } from '@mui/material';
@@ -37,9 +37,9 @@ import AccountModal from '../AccountModal/AccountModal';
 
 export default function Header() {
     const {
-        isAuthLoading,
+        isLoading,
         logOut,
-        user } = useAuthContext();
+        user } = useAppContext();
 
     const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
     const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
@@ -165,7 +165,7 @@ export default function Header() {
                 </div>
                 <div className={styles.headerTrailing}>
                     {
-                        isAuthLoading && (
+                        isLoading && (
                             <StyledIconButton>
                                 <CircularProgress size={20} />
                             </StyledIconButton>

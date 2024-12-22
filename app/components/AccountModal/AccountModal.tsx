@@ -14,7 +14,7 @@ import { Paper } from '@mui/material';
 // } from '@mui/icons-material';
 
 // import {  FormTextField } from '../Styled';
-import { useAuthContext } from '@/app/providers/AuthProvider';
+import { useAppContext } from '../../providers/AppProvider';
 import Link from 'next/link';
 import Close from '@mui/icons-material/Close';
 import { StyledIconButton } from '../Styled';
@@ -28,7 +28,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen,
     onClose
 }) => {
     // const Router = useRouter(); 
-    const { user } = useAuthContext();
+    const { user } = useAppContext();
 
     // const { setInfo } = useAppContext();
 
