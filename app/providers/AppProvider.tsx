@@ -31,6 +31,7 @@ interface AppContextType {
     sendUserVerification: () => Promise<void>;
     updateUserDisplayName: (newDisplayName: string) => Promise<void>;
     updateUserEmail: (newEmail: string, password: string) => Promise<void>;
+    setInfo: (info: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -170,6 +171,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         sendUserVerification,
         updateUserDisplayName,
         updateUserEmail,
+        setInfo,
     }), [
         info,
         isLoading,
