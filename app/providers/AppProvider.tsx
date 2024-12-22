@@ -35,7 +35,7 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const apiUrl = 'https://api.machinename.dev';
     const [info, setInfo] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -152,14 +152,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 });
                 setUser(response.data);
             } catch (error) {
-                handleError(error);
-                throw error;
+                console.error(error);
             } finally {
                 setIsLoading(false);
             }
         };
         fetchUser();
-    }, [handleError]);
+    }, []);
 
     const contextValue = useMemo(() => ({
         info,
