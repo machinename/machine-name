@@ -229,7 +229,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen,
                     </div>
                     <div className={styles.footer}>
                         <p>
-                            Need help with something else, please contact <Link href="mailto:support@machinename.dev?subject=Support%20Request&body=Please%20describe%20your%20issue%20here." className={styles.textTerms}>support</Link>
+                            Need help with something else, please contact <Link href={'mailto:support@machinename.dev?subject=Support%20Request&body=Please%20describe%20your%20issue%20here.'} className={styles.textTerms}>support</Link>
                         </p>
                         <p><Link href={'/'} className={styles.textTerms}
                             target="_blank" rel="noopener noreferrer">Terms of Service</Link> & <Link href={'/'}
