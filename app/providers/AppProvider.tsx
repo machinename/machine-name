@@ -194,7 +194,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 export const useAppContext = (): AppContextType => {
     const context = useContext(AppContext);
     if (context === undefined) {
-        throw new Error('useAuthContext must be used within AuthProvider');
+        throw new Error('useAppContext must be used within AppProvider');
     }
     return context;
 };
