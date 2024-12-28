@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './Info.module.css';
 import { Close } from '@mui/icons-material';
 import { useAppContext } from '../../providers/AppProvider';
-import { StyledIconButton } from '../Styled';
+import { IconButton } from '@mui/material';
 
 const Info: React.FC = () => {
     const { info, setInfo } = useAppContext();
@@ -14,9 +14,14 @@ const Info: React.FC = () => {
             <div className={styles.wrapper}>
                 <div className={styles.info}>
                     <p>{info}</p>
-                    <StyledIconButton onClick={() => setInfo('')}>
-                        <Close />
-                    </StyledIconButton>
+                    <IconButton
+                    sx={{
+                            color: '#ededed'
+                    }}
+                    onClick={() => setInfo('')}>
+                        <Close sx={{
+                        }} />
+                    </IconButton>
                 </div>
             </div>
         ));

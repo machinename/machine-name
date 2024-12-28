@@ -1,7 +1,6 @@
 enum ModelStatus {
     Deployed = 'Deployed',
     Inactive = 'Inactive',
-    // add new statuses as needed
 }
 
 interface Metadata {
@@ -37,53 +36,87 @@ export class MLModel {
         return this.name;
     }
 
-    setName(newName: string): void {
-        if (newName.trim() === '') throw new Error('Name cannot be empty');
-        this.name = newName;
-    }
-
     getStatus(): ModelStatus {
         return this.status;
     }
 
-    setStatus(newStatus: ModelStatus): void {
-        if (!Object.values(ModelStatus).includes(newStatus)) {
-            throw new Error('Invalid status value');
-        }
-        this.status = newStatus;
-    }
-
     getMetadata(): Metadata {
-        // Return a deep copy of metadata to ensure immutability
-        return JSON.parse(JSON.stringify(this.metadata));
+        return this.metadata;
     }
 
-    updateMetadata(newMetadata: Partial<Metadata>): void {
-        // Perform a deep merge to avoid direct mutation
-        this.metadata = Object.freeze({ ...this.metadata, ...newMetadata });
+    setName(name: string): void {
+        this.name = name;
     }
 
-    incrementUsageCount(): void {
-        if (this.metadata.usageCount < Number.MAX_SAFE_INTEGER) {
-            this.metadata = Object.freeze({
-                ...this.metadata,
-                usageCount: this.metadata.usageCount + 1,
-            });
-        } else {
-            throw new Error('Usage count has reached its maximum value');
+    setStatus(status: ModelStatus): void {
+        this.status = status;
+    }
+
+    static fromJSON(jsonString: string): MLModel | null {
+        try {
+            const { id, name, status, metadata } = JSON.parse(jsonString);
+            return new MLModel(id, name, status, metadata);
+        } catch (error) {
+            console.error('Failed to parse JSON:', error);
+            return null;
         }
+    }; 
+    
+    toJSON(): string {
+        return JSON.stringify({
+            id: this.id,
+            name: this.name,
+            status: this.status,
+            metadata: this.metadata,
+        });
+    }
+}
+
+// TensorFlowModel subclass
+export class TensorFlowModel extends MLModel {
+    private modelPath: string;
+
+    constructor(
+        id: string,
+        name: string,
+        status: ModelStatus,
+        metadata: Metadata,
+        modelPath: string
+    ) {
+        super(id, name, status, metadata);
+        this.modelPath = modelPath;
     }
 
-    toString(): string {
-        return `
-      Model ID: ${this.id}
-      Name: ${this.name}
-      Status: ${this.status}
-      Created At: ${this.metadata.createdAt}
-      Version: ${this.metadata.version}
-      Description: ${this.metadata.description}
-      Usage Count: ${this.metadata.usageCount}
-    `;
+    getModelPath(): string {
+        return this.modelPath;
+    }
+
+    setModelPath(modelPath: string): void {
+        this.modelPath = modelPath;
+    }
+}
+
+// ScikitLearnModel subclass
+export class ScikitLearnModel extends MLModel {
+    private modelFile: string;
+
+    constructor(
+        id: string,
+        name: string,
+        status: ModelStatus,
+        metadata: Metadata,
+        modelFile: string
+    ) {
+        super(id, name, status, metadata);
+        this.modelFile = modelFile;
+    }
+
+    getModelFile(): string {
+        return this.modelFile;
+    }
+
+    setModelFile(modelFile: string): void {
+        this.modelFile = modelFile;
     }
 }
 

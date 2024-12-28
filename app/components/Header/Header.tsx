@@ -1,88 +1,57 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import {
-    usePathname,
-} from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
-import Link from 'next/link';
 import {
-    AccountBoxOutlined, Close, LoginOutlined,
-    LogoutOutlined,
-    MenuOpen,
-    Dashboard,
-    DashboardOutlined,
-    Home,
-    HomeOutlined,
     AccountTreeOutlined,
-    // AccountTree,
     AccountCircle,
-    // Settings,
-    // SettingsOutlined
 } from '@mui/icons-material';
-
-// interface Project {
-//     id: string;
-//     name: string;
-//     description: string;
-//     createdAt: string;
-//     updatedAt: string;
-// }
 
 import { useAppContext } from '../../providers/AppProvider';
 import styles from "./Header.module.css";
-import { StyledButtonHeader, StyledIconButton } from '../Styled';
-import { CircularProgress } from '@mui/material';
-import AccountModal from '../AccountModal/AccountModal';
+import { StyledButton } from '../Styled';
+import { CircularProgress, IconButton, MenuItem } from '@mui/material';
+import AppModal from '../AppModal/AppModal';
 
 export default function Header() {
     const {
-        isLoading,
+        appModalView,
+        currentProject,
+        isAppLoading,
+        user,
         logOut,
-        user } = useAppContext();
+        setAppModalView,
+    } = useAppContext();
 
-    const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
     const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
-    const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
-    // const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
-    // const [project, setProject] = useState(null as Project | null);
-    // const [projects, setProjects] = useState<Project[]>([
-    //     {
-    //         id: '1',
-    //         name: 'Project One',
-    //         description: 'Description for project one',
-    //         createdAt: '2023-01-01',
-    //         updatedAt: '2023-01-02'
-    //     },
-    //     {
-    //         id: '2',
-    //         name: 'Project Two',
-    //         description: 'Description for project two',
-    //         createdAt: '2023-02-01',
-    //         updatedAt: '2023-02-02'
-    //     },
-    //     {
-    //         id: '3',
-    //         name: 'Project Three',
-    //         description: 'Description for project three',
-    //         createdAt: '2023-03-01',
-    //         updatedAt: '2023-03-02'
-    //     }
-    // ]);
+
+    // const [isScrolled, setIsScrolled] = useState(false);
 
     const pathname = usePathname();
+    const router = useRouter();
 
+    const appModalRef = useRef<HTMLDivElement>(null);
+    const projectButtonRef = useRef<HTMLButtonElement>(null);
     const accountMenuRef = useRef<HTMLDivElement>(null);
     const accountButtonRef = useRef<HTMLButtonElement>(null);
-    const navMenuRef = useRef<HTMLDivElement>(null);
-    const navButtonRef = useRef<HTMLButtonElement>(null);
-    const settingsMenuRef = useRef<HTMLDivElement>(null);
-    const settingsButtonRef = useRef<HTMLButtonElement>(null);
 
-    const handleAccountClick = () => {
-        setIsAccountModalOpen(true);
+    const handleAccount = () => {
+        setAppModalView('account');
         setIsAccountMenuOpen(false);
+    };
+
+    const handleProjects = () => {
+        setAppModalView('projects');
+        setIsAccountMenuOpen(false);
+    }; 
+
+    const handleLogIn = () => {
+        router.push('/login');
+    };
+
+    const handleDocs = () => {
+        window.open('https://github.com/machinename/docs/wiki', '_blank');
     };
 
     const handleLogOut = async () => {
@@ -96,9 +65,9 @@ export default function Header() {
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (navMenuRef.current && !navMenuRef.current.contains(event.target as Node)) {
-                if (!navButtonRef.current?.contains(event.target as Node)) {
-                    setIsNavMenuOpen(false);
+            if (appModalRef.current && !appModalRef.current.contains(event.target as Node)) {
+                if (!projectButtonRef.current?.contains(event.target as Node)) {
+                    setAppModalView('');
                 }
             }
             if (accountMenuRef.current && !accountMenuRef.current.contains(event.target as Node)) {
@@ -111,21 +80,21 @@ export default function Header() {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [accountButtonRef, accountMenuRef, navButtonRef, navMenuRef, settingsButtonRef, settingsMenuRef]);
+    }, [accountMenuRef, appModalRef, setAppModalView]);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 0) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         if (window.scrollY > 0) {
+    //             setIsScrolled(true);
+    //         } else {
+    //             setIsScrolled(false);
+    //         }
+    //     };
+    //     window.addEventListener('scroll', handleScroll);
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll);
+    //     };
+    // }, []);
 
     if (pathname === '/login') {
         return null;
@@ -133,77 +102,61 @@ export default function Header() {
 
     return (
         <React.Fragment>
-            <header className={isScrolled ? styles.headerScrolled : styles.header}>
+            {/* <header className={isScrolled ? styles.headerScrolled : styles.header}> */}
+            <header className={styles.header}>
                 <div className={styles.headerLeading}>
-                    <div className={styles.navAnchor}>
-                        <StyledIconButton ref={navButtonRef}
-                            disableTouchRipple={true}
-                            onClick={() => setIsNavMenuOpen(prev => !prev)}>
-                            {isNavMenuOpen ? <Close /> : <MenuOpen />}
-                        </StyledIconButton>
-                        {isNavMenuOpen && (
-                            <nav className={styles.menu} ref={navMenuRef}>
-                                <Link className={pathname === '/' ? styles.navLinkActive : styles.navLink} href='/'>
-                                    {pathname === '/' ? <Home /> : <HomeOutlined />}Home
-                                </Link>
-                                <Link className={pathname === '/dashboard' ? styles.navLinkActive : styles.navLink} href='/dashboard'>
-                                    {pathname === '/dashboard' ? <Dashboard /> : <DashboardOutlined />}Dashboard
-                                </Link>
-                            </nav>
-                        )}
-                    </div>
                     <div className={styles.headerTitle}>
-                        <Link href={"/"}>MACHINENAME.DEV</Link>
+                        <p>MACHINENAME.DEV</p>
                     </div>
                     <div className={styles.projectContainer}>
-                        <StyledButtonHeader variant='contained'
+                        <StyledButton variant='contained'
+                            onClick={handleProjects}
                             startIcon={<AccountTreeOutlined />}>
-                            {'Project...'}
-                            {/* {project ? project.name : 'Project...'} */}
-                        </StyledButtonHeader>
+                            {currentProject ? currentProject.getName() : 'Projects...'}
+                        </StyledButton>
                     </div>
                 </div>
                 <div className={styles.headerTrailing}>
                     {
-                        isLoading && (
-                            <StyledIconButton>
-                                <CircularProgress size={20} />
-                            </StyledIconButton>
+                        isAppLoading && (
+                            <CircularProgress size={20} />
                         )
                     }
+
+                    <StyledButton onClick={handleDocs}>Docs</StyledButton>
+
                     <div className={styles.accountAnchor}>
-                        <StyledIconButton ref={accountButtonRef}
-                            disableTouchRipple={true}
-                            onClick={() => setIsAccountMenuOpen(prev => !prev)}>
-                            {isAccountMenuOpen ? <AccountCircle /> : <AccountCircle />}
-                        </StyledIconButton>
+                        {
+                            user ? <IconButton ref={accountButtonRef}
+                                disableTouchRipple={true}
+                                onClick={() => setIsAccountMenuOpen(prev => !prev)}>
+                                <AccountCircle />
+                            </IconButton>
+                                :
+                                <StyledButton
+                                    variant='contained'
+                                    onClick={handleLogIn}
+                                >Log In</StyledButton>
+                        }
                         {isAccountMenuOpen && (
                             <nav className={styles.menu} ref={accountMenuRef}>
                                 {user && (
-                                    <div className={styles.navLink}
-                                        onClick={handleAccountClick}>
-                                        <AccountBoxOutlined /> Account
-                                    </div>
-                                )}
-                                {user ? (
-                                    <Link className={styles.navLink}
-                                        href='/'
-                                        onClick={handleLogOut}>
-                                        <LogoutOutlined /> Log Out
-                                    </Link>
-                                ) : (
-                                    <Link className={styles.navLink}
-                                        href='https://login.machinename.dev'
-                                        onClick={() => setIsAccountMenuOpen(false)}>
-                                        <LoginOutlined /> Log In
-                                    </Link>
-                                )}
+                                    <React.Fragment>
+                                        <MenuItem onClick={handleAccount}>Account</MenuItem>
+                                        <div
+                                            className={styles.navLink}
+                                            onClick={handleLogOut}>
+                                            Log Out
+                                        </div>
+                                    </React.Fragment>
+                                )
+                                }
                             </nav>
                         )}
                     </div>
                 </div>
             </header>
-            <AccountModal isOpen={isAccountModalOpen} onClose={() => setIsAccountModalOpen(false)} />
+            <AppModal appModalRef={appModalRef} isOpen={appModalView != ''} onClose={() => setAppModalView('')} view={appModalView}/>
         </React.Fragment>
     );
 };

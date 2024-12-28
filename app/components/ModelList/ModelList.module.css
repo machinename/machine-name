@@ -1,0 +1,73 @@
+.toggleButtonGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    height: 3rem;
+    align-items: center;
+    border-bottom: 0.5px solid lightgray;
+}
+
+.toggleButton,
+.toggleButtonActive {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 100%;
+    color: gray;
+    cursor: pointer;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+}
+
+.toggleButtonActive {
+    color: #0070f3;
+    border-bottom: 2px solid #0070f3;
+}
+
+.models {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.model {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 0.5px solid lightgray;
+}
+
+.modelLeading,
+.modelCenter,
+.modelTrailing {
+    /* padding-left: 0.5rem;
+    padding-right: 0.5rem; */
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.modelLeading {
+    width: 20%;
+}
+
+.modelCenter,
+.modelTrailing {
+    width: 40%;
+}
+
+@media (prefers-color-scheme: dark) {
+    .wrapper {
+        background-color: #0a0a0a;
+    }
+
+    .searchInputContainer {
+        background-color: #4d4d4d;
+    }
+}

@@ -1,20 +1,19 @@
 .header,
 .headerScrolled {
+    position: sticky;
     top: 0;
-    position: fixed;
     display: flex;
     flex-direction: row;
     height: 3rem;
     width: 100%;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 0.5px solid lightgray;
     z-index: 1;
-    background-color: inherit;
+    /* background-color: green; */
 }
 
 .headerScrolled {
-    box-shadow: 0 2px 2px rgba(0.2, 0.2, 0.2, 0.2);
+    /* box-shadow: 0 2px 2px rgba(0.2, 0.2, 0.2, 0.2); */
 }
 
 .headerLeading,
@@ -25,26 +24,15 @@
 }
 
 .headerLeading {
-    width: 100%;
     gap: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
 }
 
 .headerTrailing {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
     justify-content: flex-end;
 }
 
-.headerTitle {
-    width: 200px;
-}
-
-.headerTitle a {
-    color: gray;
-    font-size: x-large;
-    font-weight: lighter;
+.headerTitle p {
+    font-size: large;
     text-decoration: none;
 }
 
@@ -79,32 +67,31 @@
     position: fixed;
     z-index: 5;
     box-shadow: 0 2px 2px rgba(0.1, 0.1, 0.1, 0.1);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .navLink,
-.navLinkActive,
-.navLinkOut {
+.navLinkActive{
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: x-large;
-    font-weight: lighter;
     gap: 1rem;
-    color: gray;
-    padding: 0.5rem;
     text-decoration: none;
     z-index: 3;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    padding: 0.5rem;
 }
 
 .navLink:hover {
-    background-color: rgba(0.2, 0.2, 0.2, 0.2);
+    background-color: rgba(50, 50, 50, 0.2);
 }
 
 .navLinkActive {
-    background-color: #fff59c;
+    background-color: #b0d3fa;
+    color: #0070f3;
 }
 
 .searchInputContainer {
@@ -113,19 +100,29 @@
     width: 100%;
     flex-direction: row;
     align-items: center;
-    padding-left: 0.5rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    padding-right: 0.5rem;
+}
+
+.searchInputContainer {
+    background-color: #f4f4f4;
+}
+
+.searchInputContainer:hover {
     box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
 }
 
+.searchInput {
+    background-color: inherit;
+    outline: none;
+    border: none;
+    width: 100%;
+    z-index: 2;
+    font-size: normal;
+}
+
 @media(prefers-color-scheme: dark) {
-    .header,
-    .headerScrolled,
-    .menu,
-    .backgroundMenu {
+    .menu {
         background-color: #121212;
+        border: 0.5px solid gray;
     }
 
     .searchInputContainer {
@@ -135,11 +132,6 @@
     .header, 
     .headerScrolled {
         border-bottom: 0.5px solid gray;
-    }
-
-    .menu,
-    .backgroundMenu {
-        border: 0.5px solid gray;
     }
 }
 

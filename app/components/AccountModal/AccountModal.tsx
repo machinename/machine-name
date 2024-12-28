@@ -196,7 +196,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen,
                             <h1>Account</h1>
                         </div>
                         <div className={styles.headerContainerTrailing}>
-                            <div className={styles.closeIconButtonContainer}><StyledIconButton onClick={onClose}><Close /></StyledIconButton></div>
+                            <div><StyledIconButton onClick={onClose}><Close /></StyledIconButton></div>
                         </div>
                     </div>
                     <div className={styles.container}>
@@ -231,8 +231,8 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen,
                         <p>
                             Need help with something else, please contact <Link href={'mailto:support@machinename.dev?subject=Support%20Request&body=Please%20describe%20your%20issue%20here.'} className={styles.textTerms}>support</Link>
                         </p>
-                        <p><Link href={'/'} className={styles.textTerms}
-                            target="_blank" rel="noopener noreferrer">Terms of Service</Link> & <Link href={'/'}
+                        <p><Link href={'/Machine Name - Terms of Service.pdf'} className={styles.textTerms}
+                            target="_blank" rel="noopener noreferrer">Terms of Service</Link> & <Link href={'/Machine Name - Privacy Policy.pdf'}
                                 className={styles.textTerms} target="_blank" rel="noopener noreferrer">Privacy Policy</Link></p>
                     </div>
                     {/* {FormHeader(screen)} */}
